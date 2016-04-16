@@ -50,7 +50,7 @@ app.post('/registration', userForm.handleRequest(), function(req, res, next) {
 
 ##Get the form errors in the view
 ```jade
-//./views/user/registration.jade?
+//./views/user/registration.jade
 
 //...
 
