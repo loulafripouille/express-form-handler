@@ -25,9 +25,9 @@ describe('new Form()', function() {
 
     });
 
-    it('The Constraint member must be an instanceOf Constraint', function () {
+    it('The Constraint member must be null on construct', function () {
 
-        test.object(MyForm.Constraint).isInstanceOf(Constraint);
+        test.value(MyForm.Constraint).is(null);
 
     });
 
