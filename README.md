@@ -38,7 +38,7 @@ module.exports = form.create({
 
 var userForm = require('./../form/user');
 
-...
+//...
 
 app.post('/registration', userForm.handleRequest(), function(req, res, next) {
     if(!req.form.isValid) {
@@ -52,13 +52,13 @@ app.post('/registration', userForm.handleRequest(), function(req, res, next) {
 ```jade
 //./views/user/registration.jade?
 
-...
+//...
 
 if formErrors
     for error in formErrors
         div(class="alert alert-danger") #{error.<fieldName>}
 
-...
+//...
 
 ```
 
