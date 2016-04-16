@@ -19,7 +19,8 @@ Run `npm install --save express-form-handler`
 ```js
 //./form/user.js
 
-var form = require('express-form-handler');
+var FormHandler = require('express-form-handler');
+var form = new FormHandler();
 
 module.exports = form.create({
     fields: {
@@ -37,6 +38,8 @@ module.exports = form.create({
 
 var userForm = require('./../form/user');
 
+...
+
 app.post('/registration', userForm.handleRequest(), function(req, res, next) {
     if(!req.form.isValid) {
 
@@ -47,12 +50,16 @@ app.post('/registration', userForm.handleRequest(), function(req, res, next) {
 
 ##Get the form errors in the view
 ```jade
-//./views/user/registration.(jade)?
+//./views/user/registration.jade?
+
+...
 
 if formErrors
     for error in formErrors
         div(class="alert alert-danger") #{error.<fieldName>}
-});
+
+...
+
 ```
 
 #Contribute
