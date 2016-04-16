@@ -1,0 +1,33 @@
+{
+  "name": "express-form-handler",
+  "version": "0.0.0",
+  "description": "Form handler for express",
+  "main": "index.js",
+  "scripts": {
+    "test": "mocha"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/laudeon/express-form-handler.git"
+  },
+  "keywords": [
+    "form",
+    "express",
+    "form",
+    "validation",
+    "form",
+    "validator"
+  ],
+  "author": "laudeon",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/laudeon/express-form-handler/issues"
+  },
+  "homepage": "https://github.com/laudeon/express-form-handler#readme",
+  "dependencies": {
+    "validator": "^5.2.0"
+  },
+  "devDependencies": {
+    "unit.js": "^2.0.0"
+  }
+}
