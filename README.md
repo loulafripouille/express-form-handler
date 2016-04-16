@@ -1,9 +1,12 @@
 # express-form-handler
+
 Yet another form handler for the Node.js framework: Express.
 This form handler allow you to define your forms in separated files and reuse it at any time.
 Then, handle the form validation with an Express route middleware.
 
 This module doesn't provide a form markup generator! It's just a back-end form handler.
+
+[![Build Status](https://travis-ci.org/laudeon/express-form-handler.svg?branch=master)](https://travis-ci.org/laudeon/express-form-handler) [![npm version](https://badge.fury.io/js/express-form-handler.svg)](https://badge.fury.io/js/express-form-handler)
 
 #Get Started
 
