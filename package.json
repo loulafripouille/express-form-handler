@@ -1,6 +1,6 @@
 {
   "name": "express-form-handler",
-  "version": "0.2.1",
+  "version": "0.2.2",
   "description": "Form handler for express",
   "main": "index.js",
   "scripts": {
@@ -25,7 +25,7 @@
   },
   "homepage": "https://github.com/laudeon/express-form-handler#readme",
   "dependencies": {
-    "i18n-2": "^0.6.3",
+    "i18n": "^0.8.1",
     "validator": "^5.2.0"
   },
   "devDependencies": {
