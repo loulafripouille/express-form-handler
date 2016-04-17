@@ -41,7 +41,7 @@ module.exports = form.create({
 ```
 
 By default, the `label` member is set to the fields key value. 
-Also, by default, the locale is 'en'. So you error messages are in english. But you can pass the locale in second parameter of `create()` method.
+Also, by default, the locale is 'en'. So, error messages are in english if there is no second parameter. But you can pass the locale in second parameter of `create()` method.
 
 ### Locales currently integrated: 
 
