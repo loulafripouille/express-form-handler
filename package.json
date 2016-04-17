@@ -25,6 +25,7 @@
   },
   "homepage": "https://github.com/laudeon/express-form-handler#readme",
   "dependencies": {
+    "i18n-2": "^0.6.3",
     "validator": "^5.2.0"
   },
   "devDependencies": {

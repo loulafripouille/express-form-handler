@@ -1,0 +1,7 @@
+{
+	"error.integrity": "The field %s must respect the %s format",
+	"error.constraints.equal": "The field %s must be equal to the field %s",
+	"error.constraints.required": "The field %s is required",
+	"message": "message",
+	"error message": "error message"
+}

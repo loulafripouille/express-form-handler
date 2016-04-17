@@ -1,0 +1,5 @@
+{
+  "error.integrity": "Le champ %s doit respecter le format %s",
+  "error.constraints.equal": "Le champ %s doit être identique au champ %s",
+  "error.constraints.required": "Le champ %s est obligatoire"
+}

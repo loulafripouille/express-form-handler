@@ -1,8 +1,9 @@
 var test = require('unit.js'),
     Form = require('./../..'),
+    ErrorHandler = require('./../../lib/form/error/errorHandler'),
     constraints = require('./../../lib/form/constraints');
 
-describe('constraints/equal', function() {
+describe('constraints/Equal', function() {
     var MyForm = new Form();
 
     it('Equal::validate() must return the error string message if there is an error, or return an empty string.', function () {
@@ -25,7 +26,7 @@ describe('constraints/equal', function() {
             test: 'testEqualToTestBis',
             testBis: 'testEqualToTestBis'
         };
-        var Equal = new constraints['equal']();
+        var Equal = new constraints['equal'](new ErrorHandler(form.Field.fields, 'en'));
         test.value(Equal.validate(form.Field.fields.test, 'test', form.body)).isEmpty();
 
         //Simulate the express req.body used by the Form.handleRequest middleware
@@ -34,7 +35,7 @@ describe('constraints/equal', function() {
             test: 'testNotEqualToTestBis',
             testBis: 'testEqualToTestBis'
         };
-        Equal = new constraints['equal']();
+        Equal = new constraints['equal'](new ErrorHandler(form.Field.fields, 'en'));
         test.value(Equal.validate(form.Field.fields.test, 'test', form.body)).isNotEmpty();
     });
 });

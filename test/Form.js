@@ -31,15 +31,15 @@ describe('new Form()', function() {
 
     });
 
-    it('Form must have a validator member', function () {
+    it('Form must have a ErrorHandler member', function () {
 
-        test.object(MyForm).hasProperty('validator');
+        test.object(MyForm).hasProperty('ErrorHandler');
 
     });
 
-    it('The validator member must be the validator node module', function () {
+    it('The ErrorHandler member must null on construct', function () {
 
-        test.value(MyForm.validator).is(require('validator'));
+        test.value(MyForm.ErrorHandler).is(null);
 
     });
 

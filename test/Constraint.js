@@ -1,12 +1,13 @@
 'use strict';
 
 var test = require('unit.js'),
+    ErrorHandler = require('./../lib/form/error/errorHandler'),
     Form = require('./..');
 
 describe('new Constraint()', function() {
 
     var Constraint = require('./../lib/form/constraint');
-    Constraint = new Constraint();
+    Constraint = new Constraint(new ErrorHandler({}, 'en'));
 
     it('Constraint must have a constraints member', function () {
 
@@ -77,9 +78,9 @@ describe('Constraint::check()', function() {
             test: 'testNotEqualToTestBis',
             testBis: 'testEqualToTestBis'
         };
-        var MyConstraint = new Constraint();
+        var MyConstraint = new Constraint(new ErrorHandler(form.Field.fields, 'en'));
         MyConstraint.check(form.Field.fields.test, 'test', form.body);
-        test.value(MyConstraint.errors).isNotEmpty();
+        test.array(MyConstraint.errors).isNotEmpty();
 
         //Simulate the express req.body used by the Form.handleRequest middleware
         form.body = {
@@ -87,9 +88,9 @@ describe('Constraint::check()', function() {
             test: 'testEqualToTestBis',
             testBis: 'testEqualToTestBis'
         };
-        MyConstraint = new Constraint();
+        MyConstraint = new Constraint(new ErrorHandler(form.Field.fields, 'en'));
         MyConstraint.check(form.Field.fields.test, 'test', form.body);
-        test.value(MyConstraint.errors).isEmpty();
+        test.array(MyConstraint.errors).isEmpty();
 
     });
 });
@@ -98,11 +99,11 @@ describe('Constraint::hasErrors()', function () {
     var Constraint = require('./../lib/form/constraint');
 
     it('Must return boolean, true if there are errors or false if not', function(){
-        var MyConstraint = new Constraint();
+        var MyConstraint = new Constraint(new ErrorHandler({}, 'en'));
         test.value(MyConstraint.hasErrors()).isType('boolean');
         test.bool(MyConstraint.hasErrors()).isFalse();
 
-        MyConstraint.errors = {test: 'the field test is required'};
+        MyConstraint.errors.push({test: 'the field test is required'});
         test.value(MyConstraint.hasErrors()).isType('boolean');
         test.bool(MyConstraint.hasErrors()).isTrue();
     });
