@@ -5,6 +5,8 @@ Then, it handles the form validation with an Express route middleware.
 
 >This module doesn't provide a form markup generator! It's just a back-end form-handler.
 
+[![Build Status](https://travis-ci.org/laudeon/express-form-handler.svg?branch=master)](https://travis-ci.org/laudeon/express-form-handler) [![npm version](https://badge.fury.io/js/express-form-handler.svg)](https://badge.fury.io/js/express-form-handler)
+
 # Works & tested with
 
 ## Requirements
@@ -14,7 +16,7 @@ Then, it handles the form validation with an Express route middleware.
 ## Dependencies
 
 - [node-validator](https://www.npmjs.com/package/validator) for generic validations
-- [i18n-2](https://www.npmjs.com/package/i18n-2) for internationalisation of error messages
+- [i18n-2](https://www.npmjs.com/package/i18n-2) for the internationalisation of the error messages
 
 # Get Started
 
