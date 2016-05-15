@@ -1,6 +1,6 @@
 {
   "name": "express-form-handler",
-  "version": "0.2.3",
+  "version": "0.3.0",
   "description": "Form handler for express",
   "main": "index.js",
   "scripts": {

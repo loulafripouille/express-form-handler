@@ -62,8 +62,8 @@ module.exports = form.create({
 
 ### Default values
 
-**`label`** field member is set with the fields key value.
-**`messages`** field member contains the default error messages (@see ./locales)
+ - **`label`** field member is set with the fields key value.
+ - **`messages`** field member contains the default error messages (@see ./locales)
 
 by default, the locale is 'en'. So, error messages are in english if there is no second parameter. But you can pass the locale in second parameter of `create()` method.
 
@@ -80,7 +80,7 @@ You can customize error messages. This module provides three placeholder to help
  - `%equal.field%` the field (label) that the current field must match
 
 See how you can do this :
-```
+```js
 //./form/user.js
 
 var FormHandler = require('express-form-handler');
