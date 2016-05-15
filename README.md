@@ -205,6 +205,22 @@ Feel free to open an issue if you found a bug or if you have an idea that can im
 Install mocha if you don't have it: `npm install -g mocha`
 Go to the root directory and run test with: `mocha`
 
+# Changelog
+
+## v0.3.1
+
+- Fix custom error messages for constraint errors (equals to, required). I forgot to implement that :).
+- Add tests for this.
+
+## v0.3.0
+
+- Add custom error messages feature.
+- Fix i18n error. 
+  - If the i18n error was already used by your project and configured, on showing translated error messages, that overwrite your i18n configuration settings.  
+  - Then, I removed i18n dependency for a simple require-dir on json files.
+- Add common.js file to handle some 'magic values' through constants system.
+
+
 # I'm working on...
 
 - **Inheritance** that allow you to extend form (DRY principle)
