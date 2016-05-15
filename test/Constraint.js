@@ -4,7 +4,7 @@ var test = require('unit.js'),
     ErrorHandler = require('./../lib/form/error/errorHandler'),
     Form = require('./..');
 
-describe('new Constraint()', function() {
+describe('new Constraint() must respect some ', function() {
 
     var Constraint = require('./../lib/form/constraint');
     Constraint = new Constraint(new ErrorHandler({}, 'en'));

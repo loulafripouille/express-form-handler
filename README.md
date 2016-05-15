@@ -16,7 +16,7 @@ Then, it handles the form validation with an Express route middleware.
 ## Dependencies
 
 - [node-validator](https://www.npmjs.com/package/validator) for generic validations
-- [i18n-node](https://www.npmjs.com/package/i18n) for the internationalisation of the error messages
+- [require-dir](https://www.npmjs.com/package/require-dir) Helper to require() directories
 
 # Get Started
 
@@ -32,21 +32,96 @@ var form = new FormHandler();
 
 module.exports = form.create({
     fields: {
-        username: {label: 'Username', type: 'text', required: true},
-        email: {label: 'Email', type: 'email', required: true},
-        password: {label: 'Password', type: 'text', required: true, equal: 'passwordVerif'}
-        passwordVerif: {label: 'Password confirmation', type: 'text', required: true}
+        username: {
+            label: 'Username', 
+            type: 'text', 
+            required: true
+        },
+        email: {
+            label: 'Email', 
+            type: 'email', 
+            required: true
+        },
+        password: {
+            label: 'Password', 
+            type: 'text', 
+            required: true, 
+            equal: {
+                label: 'Password confirmation', 
+                to: 'passwordVerif' 
+            }
+        }
+        passwordVerif: {
+            label: 'Password confirmation', 
+            type: 'text', 
+            required: true
+        }
     }
 });
 ```
 
-By default, the `label` member is set to the fields key value. 
-Also, by default, the locale is 'en'. So, error messages are in english if there is no second parameter. But you can pass the locale in second parameter of `create()` method.
+### Default values
 
-### Locales currently integrated: 
+**`label`** field member is set with the fields key value.
+**`messages`** field member contains the default error messages (@see ./locales)
+
+by default, the locale is 'en'. So, error messages are in english if there is no second parameter. But you can pass the locale in second parameter of `create()` method.
+
+#### Locales currently integrated: 
 
 - en
 - fr
+
+#### Error messages
+
+You can customize error messages. This module provides three placeholder to help you in that task:
+ - `%field%` the field label
+ - `%field.type%` the field type
+ - `%equal.field%` the field (label) that the current field must match
+
+See how you can do this :
+```
+//./form/user.js
+
+var FormHandler = require('express-form-handler');
+var form = new FormHandler();
+
+module.exports = form.create({
+    fields: {
+        username: {
+            label: 'Username', 
+            type: 'text', 
+            required: true
+        },
+        email: {
+            label: 'Email', 
+            type: 'email', 
+            required: true,
+            messages: {
+                required: 'The field %field% is required',
+                integrity: 'The field %field% must respect the %field.type% format' //integrity = type
+            }
+        },
+        password: {
+            label: 'Password', 
+            type: 'text', 
+            required: true, 
+            equal: {
+                label: 'Password confirmation', 
+                to: 'passwordVerif' 
+            },
+            messages: {
+                equal: 'The field %field% must be equal to the field %equal.field%'
+            }
+        }
+        passwordVerif: {
+            label: 'Password confirmation', 
+            type: 'text', 
+            required: true
+        }
+    }
+});
+```
 
 ### Form type supported (with node-validator help!)
 
@@ -82,7 +157,15 @@ Also, by default, the locale is 'en'. So, error messages are in english if there
 - **equal** - check if the field value match with the given field value.
 - **required** - check if the field value exist and is not empty|false|null.
 
-## Add the middleware
+#### Coming soon
+
+- **minLength**
+- **maxLength**
+- **eqLength**
+- **gtThan** (digit field)
+- **ltThan** (digit field)
+
+## Add the route middleware
 ```js
 //./routes/user.js
 
@@ -98,7 +181,7 @@ app.post('/registration', userForm.handleRequest(), function(req, res, next) {
 });
 ```
 
-## Get the form errors in the view
+## Show form errors from view
 ```jade
 //./views/user/registration.jade
 
@@ -114,9 +197,15 @@ if formErrors
 
 # Contribute
 
-All PR are welcome !
+All PR are welcome !  
+Feel free to open an issue if you found a bug or if you have an idea that can improve this package (new features, performance issues...).
 
 # Test
 
 Install mocha if you don't have it: `npm install -g mocha`
 Go to the root directory and run test with: `mocha`
+
+# I'm working on...
+
+- **Inheritance** that allow you to extend form (DRY principle)
+- **Model persistence** a form can be related to a model (mongoDB for exemple), so, on a post request, if form is valid, the form data will be persisted in the given model.

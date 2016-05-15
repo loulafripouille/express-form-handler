@@ -1,6 +1,7 @@
 'use strict';
 
-var test = require('unit.js');
+var test = require('unit.js'),
+    common = require('./../lib/form/common');
 
 describe('new Field()', function() {
 
@@ -56,5 +57,36 @@ describe('Field::add()', function() {
         };
 
         test.function(testAdd).throws(Error);
+    });
+});
+
+describe('Field::getErrorMessage()', function() {
+
+    var Field = require('./../lib/form/field');
+
+    it('Must return the error message defined in the field object', function () {
+        var MyField = new Field();
+
+        var message = MyField.getErrorMessage({
+            label: 'test',
+            type: 'text',
+            messages: {
+                integrity: 'this field %field% is required'
+            }
+        }, common.ERROR_TYPE_INTEGRITY);
+
+        test.value(message).is('this field %field% is required');
+    });
+
+    it('Must return the default error message when no message is defined in the field object', function () {
+        var MyField = new Field();
+
+        var message = MyField.getErrorMessage({
+            label: 'test',
+            type: 'text',
+            messages: {}
+        }, common.ERROR_TYPE_INTEGRITY);
+
+        test.value(message).is('error.integrity');
     });
 });
