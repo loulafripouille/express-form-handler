@@ -160,3 +160,54 @@ describe('Form::CheckTypeIntegrity() ', function() {
     });
 
 });
+
+describe('Form::extend() ', function() {
+
+    it('Extend with a bad param (not a Form) must throw an Error', function () {
+        var MyForm = new Form();
+        var form = function(){
+            MyForm.create({
+                fields: {
+                    test: {
+                        type: 'email'
+                    }
+                }
+            }).extend('Im a bad param');
+        };
+
+        test.function(form).throws(Error);
+    });
+
+    it('must contains the extended form', function () {
+        var RootForm = new Form();
+        var form1 = RootForm.create({
+            fields: {
+                test1: {
+                    type: 'text'
+                }
+            }
+        });
+
+        var MyForm = new Form();
+        var form2 = MyForm.create({
+                fields: {
+                    test2: {
+                        type: 'email'
+                    }
+                }
+            }).extend(form1);
+
+        // Contains the two form fields
+        test.object(form2.Field.fields).is({
+            test1: {
+                label: 'test1',
+                type: 'text'
+            },
+            test2: {
+                label: 'test2',
+                type: 'email'
+            }
+        });
+    });
+
+});

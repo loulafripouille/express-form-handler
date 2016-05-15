@@ -5,9 +5,9 @@ var test = require('unit.js'),
     constraints = requiredir('./../../lib/form/constraints');
 
 describe('constraints/Equal', function() {
-    var MyForm = new Form();
 
     it('Equal::validate() must return the error string message if there is an error, or return an empty string.', function () {
+        var MyForm = new Form();
         var form = MyForm.create({
             fields: {
                 test: {
@@ -41,6 +41,7 @@ describe('constraints/Equal', function() {
     });
 
     it('Equal::validate() must return the custom error string message when there is one on error', function () {
+        var MyForm = new Form();
         var form = MyForm.create({
             fields: {
                 test: {
