@@ -33,4 +33,28 @@ describe('constraints/Required', function() {
         Required = new constraints['required'](new ErrorHandler(form.Field.fields, 'en'));
         test.value(Required.validate(form.Field.fields.test, 'test', form.body)).isEmpty();
     });
+
+    it('Required::validate() must return the custom error string message if there is one on error.', function () {
+        var form = MyForm.create({
+            fields: {
+                test: {
+                    type: 'email',
+                    required: true,
+                    messages: {
+                        required: 'test required custom message'
+                    }
+                }
+            }
+        });
+
+        //Simulate the express req.body used by the Form.handleRequest middleware
+        form.body = {
+            //value of the test form-field
+            test: ''
+        };
+        var Required = new constraints['required'](new ErrorHandler(form.Field.fields, 'en'));
+        var err = Required.validate(form.Field.fields.test, 'test', form.body);
+        test.value(err.message).is('test required custom message');
+
+    });
 });

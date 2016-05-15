@@ -56,4 +56,29 @@ describe('new ErrorBuilder()', function() {
 
     });
 
+    it('Must return the built error object with the custom error message', function () {
+
+        var ErrorBuilder = require('./../../lib/form/error/errorBuilder');
+        ErrorBuilder = new ErrorBuilder('They must be equal!', {
+            label: 'Password',
+            type:'text',
+            required: true,
+            equal: {
+                to: 'passwordConfirm',
+                label: 'Password confirmation'
+            },
+            messages: {
+                equal: 'They must be equal!'
+            }
+        }, common.ERROR_TYPE_CONSTRAINT_EQUAL, 'en');
+
+        test.value(ErrorBuilder).isType('object');
+        test.object(ErrorBuilder).is({
+            field: 'Password',
+            message: 'They must be equal!',
+            type: common.ERROR_TYPE_CONSTRAINT_EQUAL
+        });
+
+    });
+
 });

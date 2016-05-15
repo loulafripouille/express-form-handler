@@ -39,4 +39,34 @@ describe('constraints/Equal', function() {
         Equal = new constraints['equal'](new ErrorHandler(form.Field.fields, 'en'));
         test.value(Equal.validate(form.Field.fields.test, 'test', form.body)).isNotEmpty();
     });
+
+    it('Equal::validate() must return the custom error string message when there is one on error', function () {
+        var form = MyForm.create({
+            fields: {
+                test: {
+                    type: 'email',
+                    equal: {
+                        to: 'testBis',
+                        label: 'test bis'
+                    },
+                    messages: {
+                        equal: 'custom equal message'
+                    }
+                },
+                testBis: {
+                    type: 'string'
+                }
+            }
+        });
+
+        //Simulate the express req.body used by the Form.handleRequest middleware
+        form.body = {
+            //value of the test form-field
+            test: 'testNotEqualToTestBis',
+            testBis: 'testEqualToTestBis'
+        };
+        Equal = new constraints['equal'](new ErrorHandler(form.Field.fields, 'en'));
+        var err = Equal.validate(form.Field.fields.test, 'test', form.body);
+        test.value(err.message).is('custom equal message');
+    });
 });
