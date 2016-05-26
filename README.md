@@ -18,7 +18,7 @@ Run `npm install --save express-form-handler`
 
 var FormHandler = require('express-form-handler');
 
-module.exports = form.create({
+module.exports = FormHandler.create({
     fields: {
         username: {
             label: 'Username', 
@@ -73,7 +73,7 @@ See how you can do this :
 
 var FormHandler = require('express-form-handler');
 
-module.exports = form.create({
+module.exports = FormHandler.create({
     fields: {
         username: {
             label: 'Username', 
@@ -192,7 +192,7 @@ if formErrors
 var FormHandler = require('express-form-handler'),
     userForm = require('./user');
 
-module.exports = form.create({
+module.exports = FormHandler.create({
     fields: {
         address: {
             type: 'text',
@@ -256,5 +256,4 @@ Go to the root directory and run test with: `mocha`
 
 # I'm working on...
 
-- **Inheritance** that allow you to extend form (DRY principle)
 - **Model persistence** a form can be related to a model (mongoDB for exemple), so, on a post request, if form is valid, the form data will be persisted in the given model.
