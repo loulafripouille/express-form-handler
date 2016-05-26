@@ -1,6 +1,6 @@
 # express-form-handler
 Yet another form-handler for the Node.js framework: Express.
-This form-handler allows you to define your forms in separated files and reuse it at any time.
+This form-handler allows you to define your form in separated file and **reuse** and **extend** it at any time.
 Then, it handles the form validation with an Express route middleware.
 
 >This module doesn't provide a form markup generator! It's just a back-end form-handler.
@@ -15,7 +15,7 @@ Then, it handles the form validation with an Express route middleware.
 
 ## Dependencies
 
-- [node-validator](https://www.npmjs.com/package/validator) for generic validations
+- [node-validator](https://www.npmjs.com/package/validator) for basic string format assertions
 - [require-dir](https://www.npmjs.com/package/require-dir) Helper to require() directories
 
 # Get Started
@@ -28,7 +28,6 @@ Run `npm install --save express-form-handler`
 //./form/user.js
 
 var FormHandler = require('express-form-handler');
-var form = new FormHandler();
 
 module.exports = form.create({
     fields: {
@@ -62,10 +61,10 @@ module.exports = form.create({
 
 ### Default values
 
- - **`label`** field member is set with the fields key value.
- - **`messages`** field member contains the default error messages (@see ./locales)
+ - **`label`** field member is set with the fields key value (e.g  email: {...} has, by default, the label value: 'email'). 
+ - **`messages`** if no messages are provided, the default error messages will be used (see `./locales`).
 
-by default, the locale is 'en'. So, error messages are in english if there is no second parameter. But you can pass the locale in second parameter of `create()` method.
+The default locale is 'en'. But you can pass the locale in second parameter of `create({...}, 'en')` method.
 
 #### Locales currently integrated: 
 
@@ -74,7 +73,7 @@ by default, the locale is 'en'. So, error messages are in english if there is no
 
 #### Error messages
 
-You can customize error messages. This module provides three placeholder to help you in that task:
+You can customize error messages. This module provides three placeholders to help you in that task:
  - `%field%` the field label
  - `%field.type%` the field type
  - `%equal.field%` the field (label) that the current field must match
@@ -84,7 +83,6 @@ See how you can do this :
 //./form/user.js
 
 var FormHandler = require('express-form-handler');
-var form = new FormHandler();
 
 module.exports = form.create({
     fields: {
@@ -165,7 +163,7 @@ module.exports = form.create({
 - **gtThan** (digit field)
 - **ltThan** (digit field)
 
-## Add the route middleware
+## use the route middleware
 ```js
 //./routes/user.js
 
@@ -173,11 +171,13 @@ var userForm = require('./../form/user');
 
 //...
 
-app.post('/registration', userForm.handleRequest(), function(req, res, next) {
+app.post('/registration', userForm.handleRequest, function(req, res, next) {
     if(!req.form.isValid) {
 
         res.render('user/registration', {});
     }
+    
+    //else...
 });
 ```
 
@@ -195,6 +195,40 @@ if formErrors
 
 ```
 
+## Extend a form
+
+```js
+//./form/userAddress.js
+
+var FormHandler = require('express-form-handler'),
+    userForm = require('./user');
+
+module.exports = form.create({
+    fields: {
+        address: {
+            type: 'text',
+            required: true,
+            label: 'Address'
+        },
+        city: {
+            type: 'text',
+            required: true,
+            label: 'City'
+        },
+        Country: {
+            type: 'text',
+            required: true,
+            label: 'Country'
+        },
+        postalCode: {
+            type: 'numeric',
+            required: true,
+            label: 'Postal code'
+        }
+    }
+}, 'en').extend(userForm);
+```
+
 # Contribute
 
 All PR are welcome !  
@@ -206,6 +240,11 @@ Install mocha if you don't have it: `npm install -g mocha`
 Go to the root directory and run test with: `mocha`
 
 # Changelog
+
+## v1.0.0
+
+- Remove the duty to create a new Form instance.
+- Add inheritance feature with `extend()` method.
 
 ## v0.3.1
 
