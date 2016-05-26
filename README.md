@@ -7,17 +7,6 @@ Then, it handles the form validation with an Express route middleware.
 
 [![Build Status](https://travis-ci.org/laudeon/express-form-handler.svg?branch=master)](https://travis-ci.org/laudeon/express-form-handler) [![npm version](https://badge.fury.io/js/express-form-handler.svg)](https://badge.fury.io/js/express-form-handler)
 
-# Works & tested with
-
-## Requirements
-
-- Express ~4
-
-## Dependencies
-
-- [node-validator](https://www.npmjs.com/package/validator) for basic string format assertions
-- [require-dir](https://www.npmjs.com/package/require-dir) Helper to require() directories
-
 # Get Started
 
 ## Install via npm
@@ -228,6 +217,11 @@ module.exports = form.create({
     }
 }, 'en').extend(userForm);
 ```
+
+# Dependencies
+
+- [node-validator](https://www.npmjs.com/package/validator) for generic validations
+- [require-dir](https://www.npmjs.com/package/require-dir) Helper to require() directories
 
 # Contribute
 
