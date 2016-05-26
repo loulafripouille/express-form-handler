@@ -7,8 +7,7 @@ var test = require('unit.js'),
 describe('constraints/Equal', function() {
 
     it('Equal::validate() must return the error string message if there is an error, or return an empty string.', function () {
-        var MyForm = new Form();
-        var form = MyForm.create({
+        var form = Form.create({
             fields: {
                 test: {
                     type: 'email',
@@ -41,8 +40,7 @@ describe('constraints/Equal', function() {
     });
 
     it('Equal::validate() must return the custom error string message when there is one on error', function () {
-        var MyForm = new Form();
-        var form = MyForm.create({
+        var form = Form.create({
             fields: {
                 test: {
                     type: 'email',
@@ -66,7 +64,7 @@ describe('constraints/Equal', function() {
             test: 'testNotEqualToTestBis',
             testBis: 'testEqualToTestBis'
         };
-        Equal = new constraints['equal'](new ErrorHandler(form.Field.fields, 'en'));
+        var Equal = new constraints['equal'](new ErrorHandler(form.Field.fields, 'en'));
         var err = Equal.validate(form.Field.fields.test, 'test', form.body);
         test.value(err.message).is('custom equal message');
     });

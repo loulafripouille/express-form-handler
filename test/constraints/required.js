@@ -7,8 +7,7 @@ var test = require('unit.js'),
 describe('constraints/Required', function() {
 
     it('Required::validate() must return the error string message if there is an error, or return an empty string.', function () {
-        var MyForm = new Form();
-        var form = MyForm.create({
+        var form = Form.create({
             fields: {
                 test: {
                     type: 'email',
@@ -35,8 +34,7 @@ describe('constraints/Required', function() {
     });
 
     it('Required::validate() must return the custom error string message if there is one on error.', function () {
-        var MyForm = new Form();
-        var form = MyForm.create({
+        var form = Form.create({
             fields: {
                 test: {
                     type: 'email',

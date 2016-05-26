@@ -1,10 +1,10 @@
 'use strict';
 
 var test = require('unit.js'),
-    common = require('./../../lib/form/common');
+    common = require('./../../lib/form/common'),
+    ErrorBuilder = require('./../../lib/form/error/errorBuilder');
 
 describe('new ErrorBuilder()', function() {
-    var ErrorBuilder = require('./../../lib/form/error/errorBuilder');
 
     it('Expected four parameters: message, field, type and locale. Otherwise, throws an Error', function () {
 
@@ -32,10 +32,15 @@ describe('new ErrorBuilder()', function() {
 
     it('Must return the built error object', function () {
 
-        var ErrorBuilder = require('./../../lib/form/error/errorBuilder');
-        ErrorBuilder = new ErrorBuilder('error message', {label: 'test', type:'email', required: true}, common.ERROR_TYPE_INTEGRITY, 'en');
-        test.value(ErrorBuilder).isType('object');
-        test.object(ErrorBuilder).is({
+        var errorBuilder = new ErrorBuilder(
+            'error message',
+            {label: 'test', type:'email', required: true},
+            common.ERROR_TYPE_INTEGRITY,
+            'en'
+        )
+        ;
+        test.value(errorBuilder).isType('object');
+        test.object(errorBuilder).is({
             field: 'test',
             message: 'error message',
             type: common.ERROR_TYPE_INTEGRITY
@@ -45,10 +50,15 @@ describe('new ErrorBuilder()', function() {
 
     it('Must return the built error object with translated error message (locale = en)', function () {
 
-        var ErrorBuilder = require('./../../lib/form/error/errorBuilder');
-        ErrorBuilder = new ErrorBuilder('error.constraints.equal', {label: 'Password', type:'text', required: true, equal: {to: 'passwordConfirm', label: 'Password confirmation'}}, common.ERROR_TYPE_CONSTRAINT_EQUAL, 'en');
-        test.value(ErrorBuilder).isType('object');
-        test.object(ErrorBuilder).is({
+        var errorBuilder = new ErrorBuilder(
+            'error.constraints.equal',
+            {label: 'Password', type:'text', required: true, equal: {to: 'passwordConfirm', label: 'Password confirmation'}},
+            common.ERROR_TYPE_CONSTRAINT_EQUAL,
+            'en'
+        );
+
+        test.value(errorBuilder).isType('object');
+        test.object(errorBuilder).is({
             field: 'Password',
             message: 'The field Password must be equal to the field Password confirmation',
             type: common.ERROR_TYPE_CONSTRAINT_EQUAL
@@ -58,22 +68,26 @@ describe('new ErrorBuilder()', function() {
 
     it('Must return the built error object with the custom error message', function () {
 
-        var ErrorBuilder = require('./../../lib/form/error/errorBuilder');
-        ErrorBuilder = new ErrorBuilder('They must be equal!', {
-            label: 'Password',
-            type:'text',
-            required: true,
-            equal: {
-                to: 'passwordConfirm',
-                label: 'Password confirmation'
+        var errorBuilder = new ErrorBuilder(
+            'They must be equal!',
+            {
+                label: 'Password',
+                type:'text',
+                required: true,
+                equal: {
+                    to: 'passwordConfirm',
+                    label: 'Password confirmation'
+                },
+                messages: {
+                    equal: 'They must be equal!'
+                }
             },
-            messages: {
-                equal: 'They must be equal!'
-            }
-        }, common.ERROR_TYPE_CONSTRAINT_EQUAL, 'en');
+            common.ERROR_TYPE_CONSTRAINT_EQUAL,
+            'en'
+        );
 
-        test.value(ErrorBuilder).isType('object');
-        test.object(ErrorBuilder).is({
+        test.value(errorBuilder).isType('object');
+        test.object(errorBuilder).is({
             field: 'Password',
             message: 'They must be equal!',
             type: common.ERROR_TYPE_CONSTRAINT_EQUAL

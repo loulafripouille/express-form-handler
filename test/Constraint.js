@@ -58,8 +58,7 @@ describe('Constraint::check()', function() {
     var Constraint = require('./../lib/form/constraint');
 
     it('Must set Constraint::errors on error', function () {
-        var MyForm = new Form();
-        var form = MyForm.create({
+        var form = Form.create({
             fields: {
                 test: {
                     type: 'email',

@@ -1,35 +1,33 @@
 'use strict';
 
 var test = require('unit.js'),
-    common = require('./../lib/form/common');
+    common = require('./../lib/form/common'),
+    Field = require('./../lib/form/field');
 
 describe('new Field()', function() {
 
-    var Field = require('./../lib/form/field');
-    Field = new Field();
+    var MyField = new Field();
 
     it('Field must have a fields member', function () {
 
-        test.object(Field).hasProperty('fields');
+        test.object(MyField).hasProperty('fields');
 
     });
 
     it('The fields member must be an object', function () {
 
-        test.value(Field.fields).isType('object');
+        test.value(MyField.fields).isType('object');
 
     });
 
     it('The fields member must be an empty object', function () {
 
-        test.object(Field.fields).isEmpty();
+        test.object(MyField.fields).isEmpty();
 
     });
 });
 
 describe('Field::add()', function() {
-
-    var Field = require('./../lib/form/field');
 
     it('Must add the given field to Field::fields member', function () {
         var MyField = new Field();
@@ -61,8 +59,6 @@ describe('Field::add()', function() {
 });
 
 describe('Field::getErrorMessage()', function() {
-
-    var Field = require('./../lib/form/field');
 
     it('Must return the error message defined in the field object', function () {
         var MyField = new Field();
