@@ -76,7 +76,7 @@ describe('Form::CheckTypeIntegrity() ', function() {
         //Simulate the express req.body used by the Form.handleRequest middleware
         form.body = {
             //value of the test form-field
-            test: 'test@test'
+            test: ['test@test', 'test2']
         };
 
         test.value(form.checkTypeIntegrity(form.Field.fields.test, 'test')).isType('boolean');

@@ -23,8 +23,8 @@ describe('constraints/Equal', function() {
         //Simulate the express req.body used by the Form.handleRequest middleware
         form.body = {
             //value of the test form-field
-            test: 'testEqualToTestBis',
-            testBis: 'testEqualToTestBis'
+            test: ['testEqualToTestBis'],
+            testBis: ['testEqualToTestBis']
         };
         var Equal = new constraints['equal'](new ErrorHandler(form.Field.fields, 'en'));
         test.value(Equal.validate(form.Field.fields.test, 'test', form.body)).isEmpty();

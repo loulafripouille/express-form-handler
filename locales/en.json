@@ -1,5 +1,6 @@
 {
 	"error.integrity": "The field %field% must respect the %type% format",
 	"error.constraints.equal": "The field %field% must be equal to the field %equal.field%",
-	"error.constraints.required": "The field %field% is required"
+	"error.constraints.required": "The field %field% is required",
+	"error.constraints.custom": "The field %field% must respect the required format"
 }
