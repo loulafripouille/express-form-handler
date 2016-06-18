@@ -4,6 +4,7 @@ var test = require('unit.js'),
     common = require('./../../lib/form/common'),
     ErrorBuilder = require('./../../lib/form/error/errorBuilder');
 
+//TODO FIX
 describe('new ErrorBuilder()', function() {
 
     it('Expected four parameters: message, field, type and locale. Otherwise, throws an Error', function () {

@@ -4,6 +4,7 @@ var test = require('unit.js'),
     requiredir = require("require-dir"),
     constraints = requiredir('./../../lib/form/constraints');
 
+//TODO FIX
 describe('constraints/Equal', function() {
 
     it('Equal::validate() must return the error string message if there is an error, or return an empty string.', function () {

@@ -28,17 +28,21 @@ describe('new ErrorHandler()', function() {
 
 describe('ErrorHandler::newError()', function() {
     var ErrorHandler = require('./../../lib/form/error/errorHandler');
-    ErrorHandler = new ErrorHandler(
-        {
-            test: {label: 'test', type: 'email', required: true}
-        },
-        'en'
-    );
+    ErrorHandler = new ErrorHandler('en');
 
-    it('Must throws an error if the field given for the error is not in the fields array given on ErrorHandler construct', function () {
+    it('Must throws an error if the given locale is not available', function () {
 
         var fn = function() {
-            ErrorHandler.newError('message', 'testBis', 'integrity');
+            new ErrorHandler('jn');
+        };
+        test.function(fn).throws(Error);
+
+    });
+
+    it('Must throws an error if the err type not exists', function () {
+
+        var fn = function() {
+            ErrorHandler.newError({label: 'test', messages: {integrity: 'message'}}, 'errtypeundefined');
         };
         test.function(fn).throws(Error);
 
@@ -46,12 +50,42 @@ describe('ErrorHandler::newError()', function() {
 
     it('Otherwise, must return an object', function () {
 
-        test.value(ErrorHandler.newError('message', 'test', 'integrity')).isType('object');
-        test.object(ErrorHandler.newError('message', 'test', 'integrity')).is({
+        test.value(ErrorHandler.newError({label: 'test', messages: {integrity: 'message'}}, 'integrity')).isType('object');
+        test.object(ErrorHandler.newError({label: 'test', messages: {integrity: 'message'}}, 'integrity')).is({
             field: 'test',
             message: 'message',
             type: 'integrity'
         });
 
+    });
+});
+
+//TODO
+describe('Field::getErrorMessage()', function() {
+
+    it('Must return the error message defined in the field object', function () {
+        var MyField = new Field();
+
+        var message = MyField.getErrorMessage({
+            label: 'test',
+            type: 'text',
+            messages: {
+                integrity: 'this field %field% is required'
+            }
+        }, common.ERROR_TYPE_INTEGRITY);
+
+        test.value(message).is('this field %field% is required');
+    });
+
+    it('Must return the default error message when no message is defined in the field object', function () {
+        var MyField = new Field();
+
+        var message = MyField.getErrorMessage({
+            label: 'test',
+            type: 'text',
+            messages: {}
+        }, common.ERROR_TYPE_INTEGRITY);
+
+        test.value(message).is('error.integrity');
     });
 });

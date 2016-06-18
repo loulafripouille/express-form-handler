@@ -58,31 +58,232 @@ describe('Field::add()', function() {
     });
 });
 
-describe('Field::getErrorMessage()', function() {
+//TODO
+describe('Form::CheckTypeIntegrity() ', function() {
 
-    it('Must return the error message defined in the field object', function () {
-        var MyField = new Field();
-
-        var message = MyField.getErrorMessage({
-            label: 'test',
-            type: 'text',
-            messages: {
-                integrity: 'this field %field% is required'
+    it('must return true', function () {
+        var form = Form.create({
+            fields: {
+                test: {
+                    type: 'email'
+                }
             }
-        }, common.ERROR_TYPE_INTEGRITY);
+        });
+        form = test.promise.promisifyAll(form);
 
-        test.value(message).is('this field %field% is required');
+        //Simulate the express req.body used by the Form.handleRequest middleware
+        form.body = {
+            //value of the test form-field
+            test: 'test@gmail.com'
+        };
+
+        test.promise
+
+            .given(form.checkTypeIntegrityAsync(form.Field.fields.test, 'test'))
+
+            .then(function(res){
+                test.value(res).isType('boolean');
+                test.bool(res).isTrue();
+            })
+
+            .done();
+
     });
 
-    it('Must return the default error message when no message is defined in the field object', function () {
-        var MyField = new Field();
+    it('must return false', function() {
+        var form = Form.create({
+            fields: {
+                test: {
+                    type: 'email'
+                }
+            }
+        });
+        form = test.promise.promisifyAll(form);
 
-        var message = MyField.getErrorMessage({
-            label: 'test',
-            type: 'text',
-            messages: {}
-        }, common.ERROR_TYPE_INTEGRITY);
+        //Simulate the express req.body used by the Form.handleRequest middleware
+        form.body = {
+            //value of the test form-field
+            test: ['test@test', 'test2']
+        };
 
-        test.value(message).is('error.integrity');
+        test.promise
+
+            .given(form.checkTypeIntegrityAsync(form.Field.fields.test, 'test'))
+
+            .then(function(res){
+                test.value(res).isType('boolean');
+                test.bool(res).isFalse();
+            })
+
+            .done();
+
+
+
+
+        //Simulate the express req.body used by the Form.handleRequest middleware
+        form.body = {
+            //value of the test form-field
+            test: 'test'
+        };
+
+        test.promise
+
+            .given(form.checkTypeIntegrityAsync(form.Field.fields.test, 'test'))
+
+            .then(function(res){
+                test.value(res).isType('boolean');
+                test.bool(res).isFalse();
+            })
+
+            .done();
+
+        //Simulate the express req.body used by the Form.handleRequest middleware
+        form.body = {
+            //value of the test form-field
+            test: 'test@test..'
+        };
+
+        test.promise
+
+            .given(form.checkTypeIntegrityAsync(form.Field.fields.test, 'test'))
+
+            .then(function(res){
+                test.value(res).isType('boolean');
+                test.bool(res).isFalse();
+            })
+
+            .done();
     });
+});
+
+describe('Form::checkConstraints() ', function() {
+
+    it('must return true (has error(s))', function () {
+        var form = Form.create({
+            fields: {
+                test: {
+                    type: 'email',
+                    required: true
+                }
+            }
+        });
+        form.Constraint = new Constraint(form.ErrorHandler);
+        form = test.promise.promisifyAll(form);
+
+        //Simulate the express req.body used by the Form.handleRequest middleware
+        form.body = {
+            //value of the test form-field
+            test: ''
+        };
+
+        test.promise
+
+            .given(form.checkConstraintsAsync(form.Field.fields.test, 'test'))
+
+            .then(function(){
+                test.value(form.Constraint.hasErrors()).isType('boolean');
+                test.bool(form.Constraint.hasErrors()).isFalse();
+            })
+
+            .done();
+
+        //Simulate the express req.body used by the Form.handleRequest middleware
+        form.body = {
+            //value of the test form-field
+            test: ' '
+        };
+
+        test.promise
+
+            .given(form.checkConstraintsAsync(form.Field.fields.test, 'test'))
+
+            .then(function(){
+                test.value(form.Constraint.hasErrors()).isType('boolean');
+                test.bool(form.Constraint.hasErrors()).isFalse();
+            })
+
+            .done();
+    });
+
+    it('must return false (no errors)', function () {
+        var form = Form.create({
+            fields: {
+                test: {
+                    type: 'email',
+                    required: true
+                }
+            }
+        });
+        form.Constraint = new Constraint(form.ErrorHandler);
+        form = test.promise.promisifyAll(form);
+
+        //Simulate the express req.body used by the Form.handleRequest middleware
+        form.body = {
+            //value of the test form-field
+            test: '.'
+        };
+
+        test.promise
+
+            .given(form.checkConstraintsAsync(form.Field.fields.test, 'test'))
+
+            .then(function(){
+                test.value(form.Constraint.hasErrors()).isType('boolean');
+                test.bool(form.Constraint.hasErrors()).isFalse();
+            })
+
+            .done();
+
+        //Simulate the express req.body used by the Form.handleRequest middleware
+        form.body = {
+            //value of the test form-field
+            test: ' dd '
+        };
+
+        test.promise
+
+            .given(form.checkConstraintsAsync(form.Field.fields.test, 'test'))
+
+            .then(function(){
+                test.value(form.Constraint.hasErrors()).isType('boolean');
+                test.bool(form.Constraint.hasErrors()).isFalse();
+            })
+
+            .done();
+
+        //Simulate the express req.body used by the Form.handleRequest middleware
+        form.body = {
+            //value of the test form-field
+            test: 'false'
+        };
+
+        test.promise
+
+            .given(form.checkConstraintsAsync(form.Field.fields.test, 'test'))
+
+            .then(function(){
+                test.value(form.Constraint.hasErrors()).isType('boolean');
+                test.bool(form.Constraint.hasErrors()).isFalse();
+            })
+
+            .done();
+
+        //Simulate the express req.body used by the Form.handleRequest middleware
+        form.body = {
+            //value of the test form-field
+            test: '0'
+        };
+
+        test.promise
+
+            .given(form.checkConstraintsAsync(form.Field.fields.test, 'test'))
+
+            .then(function(){
+                test.value(form.Constraint.hasErrors()).isType('boolean');
+                test.bool(form.Constraint.hasErrors()).isFalse();
+            })
+
+            .done();
+    });
+
 });

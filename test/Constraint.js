@@ -7,7 +7,7 @@ var test = require('unit.js'),
 describe('new Constraint() must respect some ', function() {
 
     var Constraint = require('./../lib/form/constraint');
-    Constraint = new Constraint(new ErrorHandler({}, 'en'));
+    Constraint = new Constraint(new ErrorHandler('en'), []);
 
     it('Constraint must have a constraints member', function () {
 
@@ -31,6 +31,7 @@ describe('new Constraint() must respect some ', function() {
 
         test.object(Constraint.constraints).hasProperty('equal');
         test.object(Constraint.constraints).hasProperty('required');
+        test.object(Constraint.constraints).hasProperty('custom');
 
     });
 
@@ -77,8 +78,8 @@ describe('Constraint::check()', function() {
             test: 'testNotEqualToTestBis',
             testBis: 'testEqualToTestBis'
         };
-        var MyConstraint = new Constraint(new ErrorHandler(form.Field.fields, 'en'));
-        MyConstraint.check(form.Field.fields.test, 'test', form.body);
+        var MyConstraint = new Constraint(new ErrorHandler('en'), []);
+        MyConstraint.check(form.Field.fields.test, form.body);
         test.array(MyConstraint.errors).isNotEmpty();
 
         //Simulate the express req.body used by the Form.handleRequest middleware
@@ -87,8 +88,8 @@ describe('Constraint::check()', function() {
             test: 'testEqualToTestBis',
             testBis: 'testEqualToTestBis'
         };
-        MyConstraint = new Constraint(new ErrorHandler(form.Field.fields, 'en'));
-        MyConstraint.check(form.Field.fields.test, 'test', form.body);
+        MyConstraint = new Constraint(new ErrorHandler('en'), []);
+        MyConstraint.check(form.Field.fields.test, form.body);
         test.array(MyConstraint.errors).isEmpty();
 
     });
@@ -98,7 +99,7 @@ describe('Constraint::hasErrors()', function () {
     var Constraint = require('./../lib/form/constraint');
 
     it('Must return boolean, true if there are errors or false if not', function(){
-        var MyConstraint = new Constraint(new ErrorHandler({}, 'en'));
+        var MyConstraint = new Constraint(new ErrorHandler('en'), []);
         test.value(MyConstraint.hasErrors()).isType('boolean');
         test.bool(MyConstraint.hasErrors()).isFalse();
 
