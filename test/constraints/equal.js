@@ -4,7 +4,6 @@ var test = require('unit.js'),
     requiredir = require("require-dir"),
     constraints = requiredir('./../../lib/form/constraints');
 
-//TODO FIX
 describe('constraints/Equal', function() {
 
     it('Equal::validate() must return the error string message if there is an error, or return an empty string.', function () {
@@ -13,31 +12,53 @@ describe('constraints/Equal', function() {
                 test: {
                     type: 'email',
                     required: true,
-                    equal: 'testBis'
+                    equal: 'testBis',
+                    value: ['testEqualToTestBis']
                 },
                 testBis: {
-                    type: 'string'
+                    type: 'string',
+                    value: ['testEqualToTestBis']
                 }
             }
         });
 
-        //Simulate the express req.body used by the Form.handleRequest middleware
-        form.body = {
-            //value of the test form-field
-            test: ['testEqualToTestBis'],
-            testBis: ['testEqualToTestBis']
-        };
-        var Equal = new constraints['equal'](new ErrorHandler(form.Field.fields, 'en'));
-        test.value(Equal.validate(form.Field.fields.test, 'test', form.body)).isEmpty();
+        var Equal = test.promisifyAll(new constraints['equal'](new ErrorHandler('en')));
+        test.promise
+
+            .given(Equal.validateAsync(form.Field.fields.test, form.Field.fields))
+            .then(function(res){
+                test.value(res).isEmpty()
+            })
+
+            .done();
 
         //Simulate the express req.body used by the Form.handleRequest middleware
-        form.body = {
-            //value of the test form-field
-            test: 'testNotEqualToTestBis',
-            testBis: 'testEqualToTestBis'
+        form.Field.fields = {
+            test: {
+                type: 'email',
+                required: true,
+                equal: 'testBis',
+                value: 'testNotEqualToTestBis'
+            },
+            testBis: {
+                type: 'string',
+                value: 'testEqualToTestBis'
+            }
         };
-        Equal = new constraints['equal'](new ErrorHandler(form.Field.fields, 'en'));
-        test.value(Equal.validate(form.Field.fields.test, 'test', form.body)).isNotEmpty();
+        Equal = test.promisifyAll(new constraints['equal'](new ErrorHandler('en')));
+        test.promise
+
+            .given(Equal.validateAsync(form.Field.fields.test, form.Field.fields))
+            .then(function(res){
+                test.value(res).isType('object');
+                test.object(res).is({
+                    field: 'test',
+                    message: 'error.constraints.equal',
+                    type: 'equal'
+                });
+            })
+
+            .done();
     });
 
     it('Equal::validate() must return the custom error string message when there is one on error', function () {
@@ -49,24 +70,26 @@ describe('constraints/Equal', function() {
                         to: 'testBis',
                         label: 'test bis'
                     },
+                    value: 'testNotEqualToTestBis',
                     messages: {
                         equal: 'custom equal message'
                     }
                 },
                 testBis: {
-                    type: 'string'
+                    type: 'string',
+                    value: 'testEqualToTestBis'
                 }
             }
         });
 
-        //Simulate the express req.body used by the Form.handleRequest middleware
-        form.body = {
-            //value of the test form-field
-            test: 'testNotEqualToTestBis',
-            testBis: 'testEqualToTestBis'
-        };
-        var Equal = new constraints['equal'](new ErrorHandler(form.Field.fields, 'en'));
-        var err = Equal.validate(form.Field.fields.test, 'test', form.body);
-        test.value(err.message).is('custom equal message');
+        var Equal = test.promisifyAll(new constraints['equal'](new ErrorHandler('en')));
+        test.promise
+
+            .given(Equal.validateAsync(form.Field.fields.test, form.Field.fields))
+            .then(function(err){
+                test.value(err.message).is('custom equal message');
+            })
+
+            .done();
     });
 });

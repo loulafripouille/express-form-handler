@@ -4,7 +4,6 @@ var test = require('unit.js'),
     requiredir = require("require-dir"),
     constraints = requiredir('./../../lib/form/constraints');
 
-//TODO FIX
 describe('constraints/Required', function() {
 
     it('Required::validate() must return the error string message if there is an error, or return an empty string.', function () {
@@ -22,16 +21,29 @@ describe('constraints/Required', function() {
             //value of the test form-field
             test: ''
         };
-        var Required = new constraints['required'](new ErrorHandler(form.Field.fields, 'en'));
-        test.value(Required.validate(form.Field.fields.test, 'test', form.body)).isNotEmpty();
+        var Require = test.promisifyAll(new constraints['required'](new ErrorHandler('en')));
+        test.promise
+
+            .given(Require.validateAsync(form.Field.fields.test, form.Field.fields))
+            .then(function(res){
+                test.value(res).isObject();
+            })
+
+            .done();
 
         //Simulate the express req.body used by the Form.handleRequest middleware
         form.body = {
             //value of the test form-field
             test: 'required is true'
         };
-        Required = new constraints['required'](new ErrorHandler(form.Field.fields, 'en'));
-        test.value(Required.validate(form.Field.fields.test, 'test', form.body)).isEmpty();
+        test.promise
+
+            .given(Require.validateAsync(form.Field.fields.test, form.Field.fields))
+            .then(function(res){
+                test.value(res).isEmpty();
+            })
+
+            .done();
     });
 
     it('Required::validate() must return the custom error string message if there is one on error.', function () {
@@ -46,15 +58,21 @@ describe('constraints/Required', function() {
                 }
             }
         });
+        var Require = test.promisifyAll(new constraints['required'](new ErrorHandler('en')));
 
         //Simulate the express req.body used by the Form.handleRequest middleware
         form.body = {
             //value of the test form-field
             test: ''
         };
-        var Required = new constraints['required'](new ErrorHandler(form.Field.fields, 'en'));
-        var err = Required.validate(form.Field.fields.test, 'test', form.body);
-        test.value(err.message).is('test required custom message');
+        test.promise
 
+            .given(Require.validateAsync(form.Field.fields.test, form.Field.fields))
+            .then(function(err){
+                test.value(err).isObject();
+                test.value(err.message).is('test required custom message');
+            })
+
+            .done();
     });
 });

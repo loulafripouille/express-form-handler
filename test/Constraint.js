@@ -2,7 +2,7 @@
 
 var test = require('unit.js'),
     ErrorHandler = require('./../lib/form/error/errorHandler'),
-    Form = require('./..');
+    Field = require('./../lib/form/field');
 
 describe('new Constraint() must respect some ', function() {
 
@@ -59,39 +59,31 @@ describe('Constraint::check()', function() {
     var Constraint = require('./../lib/form/constraint');
 
     it('Must set Constraint::errors on error', function () {
-        var form = Form.create({
-            fields: {
-                test: {
-                    type: 'email',
-                    required: true,
-                    equal: 'testBis'
-                },
-                testBis: {
-                    type: 'string'
-                }
+        var MyField = new Field();
+        MyField.ErrorHandler = new ErrorHandler('en');
+        MyField.fields = {
+            test: {
+                type: 'email',
+                value: 'test@test.test',
+                equalTo: 'testBis'
+            },
+            testBis: {
+                type: 'email',
+                value: 'test@test.test'
             }
-        });
-
-        //Simulate the express req.body used by the Form.handleRequest middleware
-        form.body = {
-            //value of the test form-field
-            test: 'testNotEqualToTestBis',
-            testBis: 'testEqualToTestBis'
         };
-        var MyConstraint = new Constraint(new ErrorHandler('en'), []);
-        MyConstraint.check(form.Field.fields.test, form.body);
-        test.array(MyConstraint.errors).isNotEmpty();
+        var MyConstraint = new Constraint(MyField.ErrorHandler, MyField.fields);
+        MyConstraint = test.promise.promisifyAll(MyConstraint);
+        test.promise
 
-        //Simulate the express req.body used by the Form.handleRequest middleware
-        form.body = {
-            //value of the test form-field
-            test: 'testEqualToTestBis',
-            testBis: 'testEqualToTestBis'
-        };
-        MyConstraint = new Constraint(new ErrorHandler('en'), []);
-        MyConstraint.check(form.Field.fields.test, form.body);
-        test.array(MyConstraint.errors).isEmpty();
+            .given(MyConstraint.checkAsync(MyField.fields.test))
 
+            .then(function(){
+                test.value(MyConstraint.hasErrors()).isType('boolean');
+                test.bool(MyConstraint.hasErrors()).isFalse();
+            })
+
+            .done();
     });
 });
 

@@ -1,11 +1,12 @@
 'use strict';
 
-var test = require('unit.js');
+var test = require('unit.js'),
+    common = require('./../../lib/form/common');
 
 describe('new ErrorHandler()', function() {
     var ErrorHandler = require('./../../lib/form/error/errorHandler');
 
-    it('must throws an error on construct if no fields parameter or no locale parameter are given', function () {
+    it('must throws an error on construct if no locale parameter are given', function () {
 
         var newErrorHandler = function() {
             new ErrorHandler({});
@@ -24,12 +25,6 @@ describe('new ErrorHandler()', function() {
 
     });
 
-});
-
-describe('ErrorHandler::newError()', function() {
-    var ErrorHandler = require('./../../lib/form/error/errorHandler');
-    ErrorHandler = new ErrorHandler('en');
-
     it('Must throws an error if the given locale is not available', function () {
 
         var fn = function() {
@@ -38,6 +33,12 @@ describe('ErrorHandler::newError()', function() {
         test.function(fn).throws(Error);
 
     });
+
+});
+
+describe('ErrorHandler::newError()', function() {
+    var ErrorHandler = require('./../../lib/form/error/errorHandler');
+    ErrorHandler = new ErrorHandler('en');
 
     it('Must throws an error if the err type not exists', function () {
 
@@ -60,13 +61,13 @@ describe('ErrorHandler::newError()', function() {
     });
 });
 
-//TODO
-describe('Field::getErrorMessage()', function() {
+describe('ErrorHandler::getErrorMessage()', function() {
 
     it('Must return the error message defined in the field object', function () {
-        var MyField = new Field();
+        var ErrorHandler = require('./../../lib/form/error/errorHandler');
+        ErrorHandler = new ErrorHandler('en');
 
-        var message = MyField.getErrorMessage({
+        var message = ErrorHandler.getErrorMessage({
             label: 'test',
             type: 'text',
             messages: {
@@ -78,9 +79,10 @@ describe('Field::getErrorMessage()', function() {
     });
 
     it('Must return the default error message when no message is defined in the field object', function () {
-        var MyField = new Field();
+        var ErrorHandler = require('./../../lib/form/error/errorHandler');
+        ErrorHandler = new ErrorHandler('en');
 
-        var message = MyField.getErrorMessage({
+        var message = ErrorHandler.getErrorMessage({
             label: 'test',
             type: 'text',
             messages: {}
