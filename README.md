@@ -143,6 +143,7 @@ module.exports = FormHandler.create({
 
 - **equal** - check if the field value match with the given field value.
 - **required** - check if the field value exist and is not empty|false|null.
+- **custom** - a custom function that must return a boolean and accept the field value as first argument
 
 #### Coming soon
 
@@ -222,6 +223,7 @@ module.exports = FormHandler.create({
 
 - [node-validator](https://www.npmjs.com/package/validator) for generic validations
 - [require-dir](https://www.npmjs.com/package/require-dir) Helper to require() directories
+- [async](https://www.npmjs.com/package/async) for some async actions (loops, ...)
 
 # Contribute
 
@@ -234,6 +236,12 @@ Install mocha if you don't have it: `npm install -g mocha`
 Go to the root directory and run test with: `mocha`
 
 # Changelog
+
+## v1.1.0
+
+- Add the custom constraint
+- Add support for array field value (checkbox, select (multiple)...)
+- Add async dependencies
 
 ## v1.0.0
 
