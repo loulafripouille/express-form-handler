@@ -78,7 +78,14 @@ module.exports = FormHandler.create({
         username: {
             label: 'Username', 
             type: 'text', 
-            required: true
+            required: true,
+            custom: function(value) {
+                if(value.length < 3) return false;
+                return true;
+            },
+            messages: {
+                required: 'The field %field% minimum length is 3 chars.',
+            }
         },
         email: {
             label: 'Email', 
@@ -164,10 +171,12 @@ var userForm = require('./../form/user');
 app.post('/registration', userForm.handleRequest, function(req, res, next) {
     if(!req.form.isValid) {
 
-        res.render('user/registration', {});
+        return res.render('user/registration', {});
     }
     
     //else...
+    console.log(req.form.username);
+    console.log(req.form.password);
 });
 ```
 
