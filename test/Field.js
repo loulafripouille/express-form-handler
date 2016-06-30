@@ -169,11 +169,16 @@ describe('Field::checkConstraints() ', function() {
         MyField.ErrorHandler = new ErrorHandler('en');
         MyField.fields = {
             test: {
+                label: 'email',
                 type: 'email',
                 value: 'test@test.test',
-                equalTo: 'testBis'
+                equal: {
+                    label: 'email bis',
+                    to: 'testBis'
+                }
             },
             testBis: {
+                label: 'emailBis',
                 type: 'email',
                 value: 'testBis@test.test'
             }
