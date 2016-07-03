@@ -37,7 +37,9 @@ describe('constraints/Equal', function() {
             test: {
                 type: 'email',
                 required: true,
-                equal: 'testBis',
+                equal: {
+                    to: 'testBis'
+                },
                 value: 'testNotEqualToTestBis'
             },
             testBis: {

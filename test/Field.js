@@ -72,7 +72,8 @@ describe('Field::CheckType() ', function() {
             }
         };
         MyField.ErrorHandler = new ErrorHandler('en');
-        MyField.Constraint = new Constraint(MyField.ErrorHandler, MyField.fields);
+        MyField.Constraint = new Constraint(MyField.ErrorHandler);
+        MyField.Constraint.setFields(MyField.fields);
         test.promise
 
             .given(MyField.checkTypeAsync(MyField.fields.test))
@@ -113,7 +114,8 @@ describe('Field::CheckType() ', function() {
                 value: ['test@test', 'test']
             }
         };
-        MyField.Constraint = new Constraint(MyField.ErrorHandler, MyField.fields);
+        MyField.Constraint = new Constraint(MyField.ErrorHandler);
+        MyField.Constraint.setFields(MyField.fields);
         test.promise
 
             .given(MyField.checkTypeAsync(MyField.fields.test))
@@ -183,7 +185,8 @@ describe('Field::checkConstraints() ', function() {
                 value: 'testBis@test.test'
             }
         };
-        MyField.Constraint = new Constraint(MyField.ErrorHandler, MyField.fields);
+        MyField.Constraint = new Constraint(MyField.ErrorHandler);
+        MyField.Constraint.setFields(MyField.fields);
         test.promise
 
             .given(MyField.checkConstraintsAsync(MyField.fields.test))
@@ -229,7 +232,8 @@ describe('Field::checkConstraints() ', function() {
                 value: 'test@test.test'
             }
         };
-        MyField.Constraint = new Constraint(MyField.ErrorHandler, MyField.fields);
+        MyField.Constraint = new Constraint(MyField.ErrorHandler);
+        MyField.Constraint.setFields(MyField.fields);
         test.promise
 
             .given(MyField.checkConstraintsAsync(MyField.fields.test))
