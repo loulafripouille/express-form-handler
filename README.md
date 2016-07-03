@@ -84,7 +84,8 @@ module.exports = FormHandler.create({
                 return true;
             },
             messages: {
-                required: 'The field %field% minimum length is 3 chars.',
+                custom: 'The field %field% minimum length is 3 chars.',
+                required: 'The field %field% is required'
             }
         },
         email: {
@@ -245,6 +246,14 @@ Install mocha if you don't have it: `npm install -g mocha`
 Go to the root directory and run test with: `mocha`
 
 # Changelog
+
+## v1.1.3
+
+- Minor fix: readme, error in test...
+
+## v1.1.1 & v1.1.2
+
+- Important fix bug: no constraints checked in 1.1.0
 
 ## v1.1.0
 
