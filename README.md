@@ -54,10 +54,10 @@ module.exports = FormHandler.create({
  - **`messages`** if no messages are provided, the default error messages will be used (see `./locales`).
 
 The default locale is 'en'. But you can choose the locale with the "setLocale" method.
-
+```js
 var FormHandler = require('express-form-handler');
 FormHandler.setLocale("fr");
-
+```
 #### Locales currently integrated: 
 
 - en
