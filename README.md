@@ -38,7 +38,7 @@ module.exports = FormHandler.create({
                 label: 'Password confirmation', 
                 to: 'passwordVerif' 
             }
-        }
+        },
         passwordVerif: {
             label: 'Password confirmation', 
             type: 'text', 
@@ -53,8 +53,11 @@ module.exports = FormHandler.create({
  - **`label`** field member is set with the fields key value (e.g  email: {...} has, by default, the label value: 'email'). 
  - **`messages`** if no messages are provided, the default error messages will be used (see `./locales`).
 
-The default locale is 'en'. But you can pass the locale in second parameter of `create({...}, 'en')` method.
-
+The default locale is 'en'. But you can choose the locale with the "setLocale" method.
+```js
+var FormHandler = require('express-form-handler');
+FormHandler.setLocale("fr");
+```
 #### Locales currently integrated: 
 
 - en
@@ -162,6 +165,7 @@ module.exports = FormHandler.create({
 - **ltThan** (digit field)
 
 ## use the route middleware
+Forms must be submitted by POST method. In your routes file, you can call a route with "app.post" or "app.all" like this :
 ```js
 //./routes/user.js
 
@@ -226,7 +230,7 @@ module.exports = FormHandler.create({
             label: 'Postal code'
         }
     }
-}, 'en').extend(userForm);
+}).extend(userForm);
 ```
 
 # Dependencies
