@@ -2,6 +2,29 @@ var test = require('unit.js'),
     Form = require('./..'),
     Field = require('./../lib/form/field');
 
+describe('Form::setLocale()', function() {
+    it('Form Creation with no locale specified must have locale variable to "en"', function () {
+
+        var form = Form.setLocale();
+        test.assert(form === 'en');
+
+    });
+
+    it('Form Creation with locale & file found must return new selected locale', function () {
+
+        var form = Form.setLocale('fr');
+        test.assert(form === 'fr');
+
+    });
+
+    it('Form Creation with locale but no file found must return default locale', function () {
+
+        var form = Form.setLocale('es');
+        test.assert(form === 'en');
+
+    });
+});
+
 describe('Form::create()', function() {
     it('Form Creation with no params must throws an Error', function () {
 
