@@ -3,39 +3,6 @@
 var test = require('unit.js'),
     common = require('./../../lib/form/common');
 
-describe('new ErrorHandler()', function() {
-    var ErrorHandler = require('./../../lib/form/error/errorHandler');
-
-    it('must throws an error on construct if no locale parameter are given', function () {
-
-        var newErrorHandler = function() {
-            new ErrorHandler({});
-        };
-        test.function(newErrorHandler).throws(Error);
-
-        newErrorHandler = function() {
-            new ErrorHandler(null, 'en');
-        };
-        test.function(newErrorHandler).throws(Error);
-
-        newErrorHandler = function() {
-            new ErrorHandler();
-        };
-        test.function(newErrorHandler).throws(Error);
-
-    });
-
-    it('Must throws an error if the given locale is not available', function () {
-
-        var fn = function() {
-            new ErrorHandler('jn');
-        };
-        test.function(fn).throws(Error);
-
-    });
-
-});
-
 describe('ErrorHandler::newError()', function() {
     var ErrorHandler = require('./../../lib/form/error/errorHandler');
     ErrorHandler = new ErrorHandler('en');
