@@ -1,3 +1,5 @@
+'use strict';
+
 var test = require('unit.js'),
     Form = require('./..'),
     Field = require('./../lib/form/field');
