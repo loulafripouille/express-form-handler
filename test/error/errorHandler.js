@@ -1,10 +1,10 @@
 'use strict';
 
 var test = require('unit.js'),
-    common = require('./../../lib/form/common');
+    common = require('./../../lib/common');
 
 describe('ErrorHandler::newError()', function() {
-    var ErrorHandler = require('./../../lib/form/error/errorHandler');
+    var ErrorHandler = require('./../../lib/error/errorHandler');
     ErrorHandler = new ErrorHandler('en');
 
     it('Must throws an error if the err type not exists', function () {
@@ -31,7 +31,7 @@ describe('ErrorHandler::newError()', function() {
 describe('ErrorHandler::getErrorMessage()', function() {
 
     it('Must return the error message defined in the field object', function () {
-        var ErrorHandler = require('./../../lib/form/error/errorHandler');
+        var ErrorHandler = require('./../../lib/error/errorHandler');
         ErrorHandler = new ErrorHandler('en');
 
         var message = ErrorHandler.getErrorMessage({
@@ -46,7 +46,7 @@ describe('ErrorHandler::getErrorMessage()', function() {
     });
 
     it('Must return the default error message when no message is defined in the field object', function () {
-        var ErrorHandler = require('./../../lib/form/error/errorHandler');
+        var ErrorHandler = require('./../../lib/error/errorHandler');
         ErrorHandler = new ErrorHandler('en');
 
         var message = ErrorHandler.getErrorMessage({

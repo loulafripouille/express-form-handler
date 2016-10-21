@@ -1,8 +1,8 @@
 'use strict';
 
 var test = require('unit.js'),
-    common = require('./../../lib/form/common'),
-    ErrorBuilder = require('./../../lib/form/error/errorBuilder');
+    common = require('./../../lib/common'),
+    ErrorBuilder = require('./../../lib/error/errorBuilder');
 
 //TODO FIX
 describe('new ErrorBuilder()', function() {

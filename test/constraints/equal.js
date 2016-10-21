@@ -1,8 +1,8 @@
 var test = require('unit.js'),
     Form = require('./../..'),
-    ErrorHandler = require('./../../lib/form/error/errorHandler'),
+    ErrorHandler = require('./../../lib/error/errorHandler'),
     requiredir = require("require-dir"),
-    constraints = requiredir('./../../lib/form/constraints');
+    constraints = requiredir('./../../lib/constraints');
 
 describe('constraints/Equal', function() {
 

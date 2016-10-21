@@ -1,10 +1,10 @@
 'use strict';
 
 var test = require('unit.js'),
-    common = require('./../lib/form/common'),
-    Field = require('./../lib/form/field'),
-    ErrorHandler = require('./../lib/form/error/errorHandler'),
-    Constraint = require('./../lib/form/constraint');
+    common = require('./../lib/common'),
+    Field = require('./../lib/field'),
+    ErrorHandler = require('./../lib/error/errorHandler'),
+    Constraint = require('./../lib/constraint');
 
 describe('new Field()', function() {
 

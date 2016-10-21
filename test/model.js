@@ -1,7 +1,7 @@
 'use strict';
 
 var test = require('unit.js'),
-    Model = require('./../lib/form/model');
+    Model = require('./../lib/model');
 
 describe('Model::setModel()', function() {
 
@@ -44,7 +44,7 @@ describe('Model::Persist()', function () {
 
         model.model = myModel;
         test.promise
-            .given(model.persistAsync(data, null))
+            .given(model.persistAsync(data))
             .then(function(err){
                 test.value(model.model).isObject();
                 test.object(model.model).hasProperties(['test', 'test2', 'test3']);

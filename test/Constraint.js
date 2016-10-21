@@ -1,12 +1,12 @@
 'use strict';
 
 var test = require('unit.js'),
-    ErrorHandler = require('./../lib/form/error/errorHandler'),
-    Field = require('./../lib/form/field');
+    ErrorHandler = require('./../lib/error/errorHandler'),
+    Field = require('./../lib/field');
 
 describe('new Constraint() must respect some ', function() {
 
-    var Constraint = require('./../lib/form/constraint');
+    var Constraint = require('./../lib/constraint');
     Constraint = new Constraint(new ErrorHandler('en'), []);
 
     it('Constraint must have a constraints member', function () {
@@ -56,7 +56,7 @@ describe('new Constraint() must respect some ', function() {
 
 describe('Constraint::check()', function() {
 
-    var Constraint = require('./../lib/form/constraint');
+    var Constraint = require('./../lib/constraint');
 
     it('Must set Constraint::errors on error', function () {
         var MyField = new Field();
@@ -88,7 +88,7 @@ describe('Constraint::check()', function() {
 });
 
 describe('Constraint::hasErrors()', function () {
-    var Constraint = require('./../lib/form/constraint');
+    var Constraint = require('./../lib/constraint');
 
     it('Must return boolean, true if there are errors or false if not', function(){
         var MyConstraint = new Constraint(new ErrorHandler('en'), []);

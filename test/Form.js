@@ -2,7 +2,7 @@
 
 var test = require('unit.js'),
     Form = require('./..'),
-    Field = require('./../lib/form/field');
+    Field = require('./../lib/field');
 
 describe('Form::setLocale()', function() {
     it('Form Creation with no locale specified must have locale variable to "en"', function () {

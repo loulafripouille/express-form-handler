@@ -1,3 +1,3 @@
 'use strict';
 
-module.exports = require('./lib/form/form');
+module.exports = require('./lib/form');
