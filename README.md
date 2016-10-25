@@ -16,15 +16,10 @@ Run `npm install --save express-form-handler`
 ```js
 //./form/user.js
 
-var FormHandler = require('express-form-handler');
+const FormHandler = require('express-form-handler');
 
 module.exports = FormHandler.create({
     fields: {
-        username: {
-            label: 'Username', 
-            type: 'text', 
-            required: true
-        },
         email: {
             label: 'Email', 
             type: 'email', 
@@ -74,7 +69,7 @@ See how you can do this :
 ```js
 //./form/user.js
 
-var FormHandler = require('express-form-handler');
+const FormHandler = require('express-form-handler');
 
 module.exports = FormHandler.create({
     fields: {
@@ -82,7 +77,7 @@ module.exports = FormHandler.create({
             label: 'Username', 
             type: 'text', 
             required: true,
-            custom: function(value) {
+            custom: (value) => {
                 if(value.length < 3) return false;
                 return true;
             },
@@ -99,24 +94,8 @@ module.exports = FormHandler.create({
                 required: 'The field %field% is required',
                 integrity: 'The field %field% must respect the %field.type% format' //integrity = type
             }
-        },
-        password: {
-            label: 'Password', 
-            type: 'text', 
-            required: true, 
-            equal: {
-                label: 'Password confirmation', 
-                to: 'passwordVerif' 
-            },
-            messages: {
-                equal: 'The field %field% must be equal to the field %equal.field%'
-            }
         }
-        passwordVerif: {
-            label: 'Password confirmation', 
-            type: 'text', 
-            required: true
-        }
+        //...
     }
 });
 ```
@@ -156,7 +135,7 @@ module.exports = FormHandler.create({
 - **required** - check if the field value exist and is not empty|false|null.
 - **custom** - a custom function that must return a boolean and accept the field value as first argument
 
-#### Coming soon
+#### Coming soon (~ v1.3.x)
 
 - **minLength**
 - **maxLength**
@@ -169,7 +148,7 @@ Forms must be submitted by POST method. In your routes file, you can call a rout
 ```js
 //./routes/user.js
 
-var userForm = require('./../form/user');
+const userForm = require('./../form/user');
 
 //...
 
@@ -204,8 +183,8 @@ if formErrors
 ```js
 //./form/userAddress.js
 
-var FormHandler = require('express-form-handler'),
-    userForm = require('./user');
+const FormHandler = require('express-form-handler'),
+      userForm = require('./user');
 
 module.exports = FormHandler.create({
     fields: {
@@ -218,19 +197,49 @@ module.exports = FormHandler.create({
             type: 'text',
             required: true,
             label: 'City'
-        },
-        Country: {
-            type: 'text',
-            required: true,
-            label: 'Country'
-        },
-        postalCode: {
-            type: 'numeric',
-            required: true,
-            label: 'Postal code'
         }
+        //..
     }
 }).extend(userForm);
+```
+
+# Model persitence
+
+- When you add or update a model throught a form, you can specify which model is related to the form. Then form data will be populated in the given model.
+- At this time, just the mongoose model system is implemented. But, is really simple to add one by creating the right 'adapter'.
+
+Set the form's model by passing it in the second argument of the `create()` function. Set the adapter with the `setAdapter()` method.
+
+```js
+const 
+    FormHandler = require('express-form-handler'),
+    loginForm = require('./login'),
+    User = require('./../models/user')
+
+FormHandler.setLocale('fr')
+FormHandler.setAdapter('mongoose')
+
+module.exports = FormHandler.create({
+    fields: {
+        email: {
+            label: 'email',
+            type: 'email',
+            required: true
+        },
+        passconfirm: {
+            label: 'Confirmer le mot de passe',
+            type: 'text',
+            required: true,
+            equal: {
+                to: 'password',
+                label: 'Mot de passe'
+            },
+            messages: {
+                equal: 'La confirmation doit être identique au mot de passe'
+            }
+        }
+    }
+}, User).extend(loginForm)
 ```
 
 # Dependencies
@@ -250,6 +259,10 @@ Install mocha if you don't have it: `npm install -g mocha`
 Go to the root directory and run test with: `mocha`
 
 # Changelog
+
+## v1.2.x
+
+- Add model persitence
 
 ## v1.1.3
 
