@@ -1,7 +1,11 @@
 # express-form-handler
 Yet another form-handler for the Node.js framework: Express.
-This form-handler allows you to define your form in separated file and **reuse** and **extend** it at any time.
+
+This module allows you to define your form in separated file, **reuse** and **extend** it at any time.
 Then, it handles the form validation with an Express route middleware.
+
+You can also attach a model to your form. In this way, the model will be automatically updated with form data.
+This feature is developed with an adapter principle, feel free to add yours. 
 
 >This module doesn't provide a form markup generator! It's just a back-end form-handler.
 
@@ -205,7 +209,7 @@ module.exports = FormHandler.create({
 
 # Model persitence
 
-- When you add or update a model throught a form, you can specify which model is related to the form. Then form data will be populated in the given model.
+- When you add or update a model throught a form, you can specify which model is related to the form. Then, form's data will be populated in the given model.
 - At this time, just the mongoose model system is implemented. But, is really simple to add one by creating the right 'adapter'.
 
 Set the form's model by passing it in the second argument of the `create()` function. Set the adapter with the `setAdapter()` method.
