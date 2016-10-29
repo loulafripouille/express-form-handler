@@ -5,7 +5,7 @@ var test = require('unit.js'),
 
 describe('Model::setModel()', function() {
 
-    var model = new Model();
+    var model = new Model('mongoose');
 
     it('Must set Model::needPersist to false if the given model is not a mongoose model', function () {
         model.model = {};
@@ -27,14 +27,14 @@ describe('Model::setModel()', function() {
 
 describe('Model::Persist()', function () {
     
-    var model = new Model();
+    var model = new Model('mongoose');
     model = test.promise.promisifyAll(model);
 
     it('Must set Model::model members value according to the given data members value', function () {
         let data = {
-            test: 'test',
-            test2: 'test2',
-            test3: 'test3'
+            test: {value: 'test'},
+            test2: {value: 'test2'},
+            test3: {value: 'test3'}
         };
         let myModel = function model() {
             this.test = null;
@@ -45,11 +45,17 @@ describe('Model::Persist()', function () {
         model.model = myModel;
         test.promise
             .given(model.persistAsync(data))
-            .then(function(err){
-                test.value(model.model).isObject();
-                test.object(model.model).hasProperties(['test', 'test2', 'test3']);
-                test.object(model.model).hasValues(['test', 'test2', 'test3']);
+            .then(function(model){
+                test.value(model).isObject();
+                test.object(model).hasProperties(['test', 'test2', 'test3']);
+                test.object(model).hasValues(['test', 'test2', 'test3']);
             })
-            .done();
+
+            .catch(function(err){
+              test.fail(err.message);
+              done(err);
+            })
+
+            .done()
     });
 });
