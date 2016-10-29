@@ -145,6 +145,8 @@ module.exports = FormHandler.create({
 - **UUID** - check if the string is a UUID (version 3, 4 or 5).
 - **uppercase** - check if the string is uppercase.
 
+check the [validator module](https://www.npmjs.com/package/validator) for more informations, etc.
+
 ### Form constraints supported
 
 - **equal** - check if the field value match with the given field value.
