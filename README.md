@@ -11,8 +11,6 @@ This feature is developed with an adapter principle, feel free to add yours.
 
 [![Build Status](https://travis-ci.org/laudeon/express-form-handler.svg?branch=master)](https://travis-ci.org/laudeon/express-form-handler) [![npm version](https://badge.fury.io/js/express-form-handler.svg)](https://badge.fury.io/js/express-form-handler)
 
-**Table of Contents**  *generated with [DocToc](http://doctoc.herokuapp.com/)*
-
 - [Get Started](#get-started)
 	- [Install via npm](#install-via-npm)
 	- [Create a form file](#create-a-form-file)
