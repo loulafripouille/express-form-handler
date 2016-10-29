@@ -11,12 +11,26 @@ This feature is developed with an adapter principle, feel free to add yours.
 
 [![Build Status](https://travis-ci.org/laudeon/express-form-handler.svg?branch=master)](https://travis-ci.org/laudeon/express-form-handler) [![npm version](https://badge.fury.io/js/express-form-handler.svg)](https://badge.fury.io/js/express-form-handler)
 
+**Table of Contents**  *generated with [DocToc](http://doctoc.herokuapp.com/)*
+
+- [Get Started](#get-started)
+	- [Install via npm](#install-via-npm)
+	- [Create a form file](#create-a-form-file)
+	- [Use the route middleware](#use-the-route-middleware)
+	- [Show form errors from view](#show-form-errors-from-view)
+	- [Extend a form](#extend-a-form)
+- [Model persitence](#model-persitence)
+- [Dependencies](#dependencies)
+- [Contribute](#contribute)
+- [Test](#test)
+- [Changelog](#changelog)
+
 # Get Started
 
 ## Install via npm
 Run `npm install --save express-form-handler`
 
-## Create a form file:
+## Create a form file
 ```js
 //./form/user.js
 
@@ -147,7 +161,7 @@ module.exports = FormHandler.create({
 - **gtThan** (digit field)
 - **ltThan** (digit field)
 
-## use the route middleware
+## Use the route middleware
 Forms must be submitted by POST method. In your routes file, you can call a route with "app.post" or "app.all" like this :
 ```js
 //./routes/user.js
@@ -299,8 +313,3 @@ Go to the root directory and run test with: `mocha`
   - If the i18n error was already used by your project and configured, on showing translated error messages, that overwrite your i18n configuration settings.  
   - Then, I removed i18n dependency for a simple require-dir on json files.
 - Add common.js file to handle some 'magic values' through constants system.
-
-
-# I'm working on...
-
-- **Model persistence** a form can be related to a model (mongoDB for exemple), so, on a post request, if form is valid, the form data will be persisted in the given model.
