@@ -34,3 +34,6 @@ node_modules
 
 #Jetbrains project folder
 .idea
+
+# MAC OSX
+.DS_Store
