@@ -32,9 +32,9 @@ Run `npm install --save express-form-handler`
 ```js
 //./form/user.js
 
-const FormHandler = require('express-form-handler');
+const formHandler = require('express-form-handler');
 
-module.exports = FormHandler.create({
+module.exports = formHandler.create({
     fields: {
         email: {
             label: 'Email', 
@@ -66,8 +66,8 @@ module.exports = FormHandler.create({
 
 The default locale is 'en'. But you can choose the locale with the "setLocale" method.
 ```js
-var FormHandler = require('express-form-handler');
-FormHandler.setLocale("fr");
+var formHandler = require('express-form-handler');
+formHandler.setLocale("fr");
 ```
 #### Locales currently integrated: 
 
@@ -85,9 +85,9 @@ See how you can do this :
 ```js
 //./form/user.js
 
-const FormHandler = require('express-form-handler');
+const formHandler = require('express-form-handler');
 
-module.exports = FormHandler.create({
+module.exports = formHandler.create({
     fields: {
         username: {
             label: 'Username', 
@@ -170,10 +170,9 @@ const userForm = require('./../form/user');
 
 //...
 
-app.post('/registration', userForm.handleRequest, function(req, res, next) {
+app.post('/registration', userForm.handleRequest(), function(req, res, next) {
     if(!req.form.isValid) {
-
-        return res.render('user/registration', {});
+        return next({ error: { status:400 } });
     }
     
     //else...
@@ -201,10 +200,10 @@ if formErrors
 ```js
 //./form/userAddress.js
 
-const FormHandler = require('express-form-handler'),
-      userForm = require('./user');
+const formHandler = require('express-form-handler');
+const userForm = require('./user');
 
-module.exports = FormHandler.create({
+module.exports = formHandler.create({
     fields: {
         address: {
             type: 'text',
@@ -229,15 +228,14 @@ module.exports = FormHandler.create({
 Set the form's model by passing it in the second argument of the `create()` function. Set the adapter with the `setAdapter()` method.
 
 ```js
-const 
-    FormHandler = require('express-form-handler'),
-    loginForm = require('./login'),
-    User = require('./../models/user')
+const formHandler = require('express-form-handler');
+const loginForm = require('./login');
+const User = require('./../models/user');
 
-FormHandler.setLocale('fr')
-FormHandler.setAdapter('mongoose')
+formHandler.setLocale('fr')
+formHandler.setAdapter('mongoose')
 
-module.exports = FormHandler.create({
+module.exports = formHandler.create({
     fields: {
         email: {
             label: 'email',
