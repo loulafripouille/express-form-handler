@@ -243,15 +243,15 @@ module.exports = formHandler.create({
             required: true
         },
         passconfirm: {
-            label: 'Confirmer le mot de passe',
+            label: 'Confirm password',
             type: 'text',
             required: true,
             equal: {
-                to: 'password',
-                label: 'Mot de passe'
+                to: 'password'
+		label: 'Password' // useful for the error message
             },
             messages: {
-                equal: 'La confirmation doit être identique au mot de passe'
+                equal: 'Password confirmation must be equal to the password'
             }
         }
     }
