@@ -1,0 +1,36 @@
+{
+  "name": "express-form-handler",
+  "version": "1.2.14",
+  "description": "Form handler for express",
+  "main": "index.js",
+  "scripts": {
+    "test": "node_modules/mocha/bin/mocha --recursive"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/laudeon/express-form-handler.git"
+  },
+  "keywords": [
+    "form",
+    "express",
+    "form",
+    "validation",
+    "form",
+    "validator"
+  ],
+  "author": "laudeon",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/laudeon/express-form-handler/issues"
+  },
+  "homepage": "https://github.com/laudeon/express-form-handler#readme",
+  "dependencies": {
+    "as-array": "^2.0.0",
+    "validator": "^6.2.1"
+  },
+  "devDependencies": {
+    "chai": "^3.5.0",
+    "mocha": "^3.2.0",
+    "sinon": "^1.17.7"
+  }
+}
