@@ -8,7 +8,7 @@ const chai = require('chai')
 const expect = chai.expect
 const sinon = require('sinon')
 const config = require('./../lib/config')
-const redisStrategy = require('./../lib/model/strategies/redis')
+const sequelizeStrategy = require('./../lib/model/strategies/sequelize')
 
 describe('Config module', function () {
 
@@ -40,15 +40,30 @@ describe('Config module', function () {
 
   describe('handles model strategies', function () {
 
-    it('should be mongoose strategy by default', function () {
+    it('should be null by default', function () {
 
-      expect(config.getModelStrategy()).to.has.respondTo('bind')
-      expect(config.getModelStrategy().name).to.be.equal('mongoose')
+      expect(config.getModelStrategy()).to.be.equal(null)
     })
 
     it('should set the strategy with the given one', function () {
-      config.setModelStrategy(new redisStrategy())
-      expect(config.getModelStrategy().name).to.be.equal('redis')
+      config.setModelStrategy(new sequelizeStrategy())
+      expect(config.getModelStrategy().name).to.be.equal('sequelize')
+      config.resetModelStrategy()
+    })
+  })
+
+  describe('validation model', function () {
+
+    it('should throw an error on non boolean arg given', function () {
+      let fn = function () {
+        config.setValidationModel('true')
+      }
+      expect(fn).to.throw(Error, 'Validation model option must be a boolean')
+    })
+
+    it('should set the validation model value', function () {
+      config.setValidationModel(true)
+      expect(config.getValidationModel()).to.be.equal(true)
     })
   })
 })

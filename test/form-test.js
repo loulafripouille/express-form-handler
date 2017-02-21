@@ -7,14 +7,14 @@
 const chai = require('chai')
 const expect = chai.expect
 const sinon = require('sinon')
-const formHandler = require('./../lib/form')
+const Form = require('./../lib/form')
 
 describe('Form module', function () {
   
   describe('Create a new form', function () {
     
     it('Must return a new instance', function () {
-      let form = formHandler.create()
+      let form = Form.create()
       expect(form.constructor.name).to.be.equal('Form')
       expect(form).to.has.ownProperty('fields', 'errors')
       expect(form).to.respondTo('process', 'extends')
@@ -22,24 +22,29 @@ describe('Form module', function () {
 
     it('Must throw an error on bad args', function () {
       let createForm = function () {
-        formHandler.create({})
+        Form.create({})
       }
-      expect(createForm).throw(Error, 'You must pass an array')
+      expect(createForm).to.throw(Error, 'You must pass an array')
+
+      createForm = function () {
+        Form.create([], {})
+      }
+      expect(createForm).to.throw(Error, 'If you pass a model, you must set a model strategy')
     })
 
     it('Must bind given fields', function () {
-      let form = formHandler.create([
+      let form = Form.create([
         {
           name: 'username',
           label: 'Username',
-          format: new formHandler.Stringformat(),
-          rules: [new formHandler.Requiredrule()]
+          format: Form.format.string(),
+          rules: [Form.rule.required()]
         },
         {
           name: 'password',
           label: 'Password',
-          format: new formHandler.Stringformat(),
-          rules: [new formHandler.Requiredrule()]
+          format: Form.format.string(),
+          rules: [Form.rule.required()]
         }
       ])
       expect(form.fields).to.be.instanceof(Array)
@@ -49,61 +54,34 @@ describe('Form module', function () {
       expect(form.fields[0]).to.respondTo('check')
     })
 
-    it('Must throw an error on bad fields arg (no field.type)', function () {
-      let createForm = function () {
-        formHandler.create([
-          {
-            name: 'username',
-            label: 'Username',
-            rules: [new formHandler.Requiredrule()]
-          }
-        ])
-      }
-      expect(createForm).to.throw(Error, 'The field format must be an instance of Fieldformat')
-    })
-
-    it('Must throw an error on bad fields arg (unknown field type)', function () {
-      let createForm = function () {
-        formHandler.create([
-          {
-            name: 'username',
-            label: 'Username',
-            format: 'badType',
-            rules: [new formHandler.Requiredrule()]
-          }
-        ])
-      }
-      expect(createForm).to.throw(Error, 'The field format must be an instance of Fieldformat')
-    })
-
     describe('Extend a form', function () {
 
       it('Should add given form fields into extended form fields array', function () {
-        let rootForm = formHandler.create([
+        let rootForm = Form.create([
           {
             name: 'username',
             label: 'Username',
-            format: new formHandler.Stringformat(),
-            rules: [new formHandler.Requiredrule()]
+            format: Form.format.string(),
+            rules: Form.rule.required()
           },
           {
             name: 'password',
             label: 'Password',
-            format: new formHandler.Stringformat(),
-            rules: [new formHandler.Requiredrule()]
+            format: Form.format.string(),
+            rules: Form.rule.required()
           }
         ])
-        let form = formHandler.create([
+        let form = Form.create([
           {
             name: 'email',
             label: 'Email',
-            format: new formHandler.Emailformat(),
-            rules: [new formHandler.Requiredrule()]
+            format: Form.format.email(),
+            rules: Form.rule.required()
           },
           {
             name: 'birthday',
             label: 'Birthday date',
-            format: new formHandler.Dateformat()
+            format: Form.format.date()
           }
         ]).extends(rootForm)
         expect(form.fields).to.be.length(4)
@@ -112,17 +90,17 @@ describe('Form module', function () {
       it('Should throw an error on bad param', function () {
         let createExtendedForm = function () {
           let rootForm = {}
-          let form = formHandler.create([
+          let form = Form.create([
             {
               name: 'email',
               label: 'Email',
-              format: new formHandler.Emailformat(),
-              rules: [new formHandler.Requiredrule()]
+              format: Form.format.email(),
+              rules: Form.rule.required()
             },
             {
               name: 'birthday',
               label: 'Birthday date',
-              format: new formHandler.Dateformat()
+              format: Form.format.date()
             }
           ]).extends(rootForm)
         }
@@ -132,9 +110,9 @@ describe('Form module', function () {
 
     describe('Process a form', function () {
 
-      it('should call next on bad method', function () {
-        let form = formHandler.create()
-        let nextStub = sinon.stub()
+      it('should call next on bad method', sinon.test(function () {
+        let form = Form.create()
+        let nextStub = this.stub()
         let req = { method: 'get' }
         let res = {}
         let errorArg = new Error()
@@ -144,11 +122,11 @@ describe('Form module', function () {
         expect(nextStub.calledOnce).to.be.true
         expect(nextStub.calledWithExactly(errorArg)).to.be.true
         expect(nextStub.args[0][0].message).to.be.equal('Expected post, put or patch method. get given')
-      })
+      }))
 
-      it('should call next on unknown field', function () {
-        let form = formHandler.create([{ name: 'test', label: 'test', format: new formHandler.Stringformat() }])
-        let nextStub = sinon.stub()
+      it('should call next on unknown field', sinon.test(function () {
+        let form = Form.create([{ name: 'test', label: 'test', format: Form.format.string() }])
+        let nextStub = this.stub()
         let req = { method: 'post', body: {} }
         let res = {}
         let errorArg = new Error()
@@ -158,12 +136,12 @@ describe('Form module', function () {
         expect(nextStub.calledOnce).to.be.true
         expect(nextStub.calledWithExactly(errorArg)).to.be.true
         expect(nextStub.args[0][0].message).to.be.equal('No field found in the request body for the field name: test')
-      })
+      }))
 
-      it('should call check on field, call next and set req form data', function () {
-        let form = formHandler.create([{ name: 'test', label: 'test', format: new formHandler.Stringformat() }])
-        let nextStub = sinon.stub()
-        let checkStub = sinon.spy(form.fields[0], 'check')
+      it('should call check on field, call next and set req form data', sinon.test(function () {
+        let form = Form.create([{ name: 'test', label: 'test', format: Form.format.string() }])
+        let nextStub = this.stub()
+        let checkStub = this.spy(form.fields[0], 'check')
         let req = { method: 'post', body: { test: 'test' } }
         let res = {}
 
@@ -172,7 +150,7 @@ describe('Form module', function () {
         expect(checkStub.calledBefore(nextStub)).to.be.true
         expect(nextStub.calledOnce).to.be.true
         expect(req.form).to.has.ownProperty('body', 'errors', 'isValid')
-      })
+      }))
     })
   })
 })
