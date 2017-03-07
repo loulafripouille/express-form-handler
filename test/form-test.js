@@ -25,11 +25,6 @@ describe('Form module', function () {
         Form.create({})
       }
       expect(createForm).to.throw(Error, 'You must pass an array')
-
-      createForm = function () {
-        Form.create([], {})
-      }
-      expect(createForm).to.throw(Error, 'If you pass a model, you must set a model strategy')
     })
 
     it('Must bind given fields', function () {
@@ -138,18 +133,23 @@ describe('Form module', function () {
         expect(nextStub.args[0][0].message).to.be.equal('No field found in the request body for the field name: test')
       }))
 
-      it('should call check on field, call next and set req form data', sinon.test(function () {
+      it('should call check on field, call next and set req form data', sinon.test(function (done) {
         let form = Form.create([{ name: 'test', label: 'test', format: Form.format.string() }])
         let nextStub = this.stub()
         let checkStub = this.spy(form.fields[0], 'check')
         let req = { method: 'post', body: { test: 'test' } }
         let res = {}
 
-        form.process(req, res, nextStub)
+        form
+        .process(req, res, nextStub)
+        .then(function(){
+          expect(checkStub.calledBefore(nextStub)).to.be.true
+          expect(nextStub.calledOnce).to.be.true
+          expect(req.form).to.has.ownProperty('body', 'errors', 'isValid')
+          done()
+        })
+        .catch(e => done(e))
 
-        expect(checkStub.calledBefore(nextStub)).to.be.true
-        expect(nextStub.calledOnce).to.be.true
-        expect(req.form).to.has.ownProperty('body', 'errors', 'isValid')
       }))
     })
   })

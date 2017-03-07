@@ -9,7 +9,7 @@ const expect = chai.expect
 const sinon = require('sinon')
 const rewire = require('rewire')
 const Field = rewire('./../../lib/field/field')
-const Form = require('./../../lib/form')
+const Form = require('./../..')
 
 describe('Field module', function () {
 

@@ -52,18 +52,22 @@ describe('Config module', function () {
     })
   })
 
-  describe('validation model', function () {
+  describe('validation by the model strategy', function () {
 
     it('should throw an error on non boolean arg given', function () {
       let fn = function () {
-        config.setValidationModel('true')
+        config.validationByModel('true')
       }
       expect(fn).to.throw(Error, 'Validation model option must be a boolean')
     })
 
     it('should set the validation model value', function () {
-      config.setValidationModel(true)
-      expect(config.getValidationModel()).to.be.equal(true)
+      config.validationByModel(true)
+      expect(config.isValidationByModel()).to.be.equal(true)
+    })
+
+    after(function() {
+      config.validationByModel(false)
     })
   })
 })
