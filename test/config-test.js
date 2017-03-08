@@ -46,8 +46,11 @@ describe('Config module', function () {
     })
 
     it('should set the strategy with the given one', function () {
-      config.setModelStrategy(new sequelizeStrategy())
+      config.setModelStrategy(new sequelizeStrategy({}))
       expect(config.getModelStrategy().name).to.be.equal('sequelize')
+    })
+
+    beforeEach(function () {
       config.resetModelStrategy()
     })
   })

@@ -103,6 +103,52 @@ describe('Form module', function () {
       })
     })
 
+    describe('Validate a form', function () {
+      let config = require('./../lib/config')
+      let MongooseStrategy = require('./../lib/model/strategies/mongoose')
+
+      it('should call Field:check on each fields', sinon.test(function (done) {
+        let form = Form.create([{ name: 'test', label: 'test', format: Form.format.string() }])
+        let checkStub = this.stub(form.fields[0], 'check')
+        let isValidationByModelStub = this.stub(config, 'isValidationByModel')
+        let req = { method: 'post', body: { test: 'test' } }
+        let res = {}
+
+        form
+        .validate()
+        .then(function () {
+          expect(isValidationByModelStub.calledBefore(checkStub))
+          expect(checkStub.calledOnce)
+          done()
+        })
+        .catch(e => done(e))
+      }))
+
+      it('should call ModelStrategy:validate on each fields', sinon.test(function (done) {
+        config.setModelStrategy(new MongooseStrategy({}))
+        
+        let form = Form.create([{ name: 'test', label: 'test', format: Form.format.string() }])
+        let modelStrategyValidateStub = this.stub(config.getModelStrategy(), 'validate')
+        let isValidationByModelStub = this.stub(config, 'isValidationByModel')
+        let req = { method: 'post', body: { test: 'test' } }
+        let res = {}
+
+        form
+        .validate()
+        .then(function () {
+          expect(isValidationByModelStub.calledBefore(modelStrategyValidateStub))
+          expect(modelStrategyValidateStub.calledOnce)
+          done()
+        })
+        .catch(e => done(e))
+      }))
+
+      afterEach(function () {
+        config.validationByModel(false)
+        config.resetModelStrategy()
+      })
+    })
+
     describe('Process a form', function () {
 
       it('should call next on bad method', sinon.test(function () {
@@ -133,17 +179,17 @@ describe('Form module', function () {
         expect(nextStub.args[0][0].message).to.be.equal('No field found in the request body for the field name: test')
       }))
 
-      it('should call check on field, call next and set req form data', sinon.test(function (done) {
+      it('should call Form:validate and next, and fill req.form', sinon.test(function (done) {
         let form = Form.create([{ name: 'test', label: 'test', format: Form.format.string() }])
         let nextStub = this.stub()
-        let checkStub = this.spy(form.fields[0], 'check')
+        let validateStub = this.spy(form, 'validate')
         let req = { method: 'post', body: { test: 'test' } }
         let res = {}
 
         form
         .process(req, res, nextStub)
-        .then(function(){
-          expect(checkStub.calledBefore(nextStub)).to.be.true
+        .then(function () {
+          expect(validateStub.calledBefore(nextStub)).to.be.true
           expect(nextStub.calledOnce).to.be.true
           expect(req.form).to.has.ownProperty('body', 'errors', 'isValid')
           done()
