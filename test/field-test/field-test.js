@@ -56,10 +56,10 @@ describe('Field module', function () {
       formatCheckStub.returns(true)
 
       field.value = 'test@test.com'
-      field.check()
+      field.check([])
 
       expect(formatCheckStub.calledOnce).to.be.true
-      expect(formatCheckStub.calledWithExactly(field.definition, field.value)).to.be.true
+      expect(formatCheckStub.calledWithExactly(field.definition, [])).to.be.true
     }))
 
     it('must reset the field format errors', sinon.test(function () {
@@ -90,12 +90,12 @@ describe('Field module', function () {
       ruleCheckStub.returns(true)
       
       field.value = 'test@test.com'
-      field.check()
+      field.check([])
 
       expect(formatCheckStub.calledBefore(ruleCheckStub)).to.be.true
-      expect(formatCheckStub.calledWithExactly(field.definition, field.value)).to.be.true
+      expect(formatCheckStub.calledWithExactly(field.definition, [])).to.be.true
       expect(ruleCheckStub.calledOnce).to.be.true
-      expect(formatCheckStub.calledWithExactly(field.definition, field.value)).to.be.true
+      expect(formatCheckStub.calledWithExactly(field.definition, [])).to.be.true
     }))
 
     it('must call generateErrors function on a field format error', sinon.test(function () {
@@ -116,10 +116,10 @@ describe('Field module', function () {
       ruleCheckStub.returns(true)
       
       field.value = 'test@test.com'
-      field.check()
+      field.check([])
 
       expect(formatCheckStub.calledBefore(generateErrorsSpy)).to.be.true
-      expect(formatCheckStub.calledWithExactly(field.definition, field.value)).to.be.true
+      expect(formatCheckStub.calledWithExactly(field.definition, [])).to.be.true
       expect(generateErrorsSpy.calledOnce).to.be.true
     }))
 
@@ -141,12 +141,12 @@ describe('Field module', function () {
       ruleCheckStub.returns(false)
       
       field.value = 'test@test.com'
-      field.check()
+      field.check([])
 
       expect(formatCheckStub.calledBefore(ruleCheckStub)).to.be.true
-      expect(formatCheckStub.calledWithExactly(field.definition, field.value)).to.be.true
+      expect(formatCheckStub.calledWithExactly(field.definition, [])).to.be.true
       expect(ruleCheckStub.calledBefore(generateErrorsSpy)).to.be.true
-      expect(ruleCheckStub.calledWithExactly(field.definition, field.value)).to.be.true
+      expect(ruleCheckStub.calledWithExactly(field.definition, [])).to.be.true
       expect(generateErrorsSpy.calledOnce).to.be.true
     }))
   })
