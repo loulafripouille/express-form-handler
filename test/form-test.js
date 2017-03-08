@@ -7,7 +7,7 @@
 const chai = require('chai')
 const expect = chai.expect
 const sinon = require('sinon')
-const Form = require('./../lib/form')
+const Form = require('./..')
 
 describe('Form module', function () {
   

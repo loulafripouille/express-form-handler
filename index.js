@@ -8,6 +8,8 @@ const FieldFormat = require('./lib/field/fieldformat')
 const FieldRule = require('./lib/field/fieldrule')
 
 const Strategy = require('./lib/model/strategy')
+const MongooseStrategy = require('./lib/model/strategies/mongoose')
+const SequelizeStrategy = require('./lib/model/strategies/sequelize')
 
 const Stringformat = require('./lib/field/formats/string')
 const Dateformat = require('./lib/field/formats/date')
@@ -45,10 +47,12 @@ module.exports.rule = {
   required: () => new Requiredrule(),
   minlength: (length) => new Minlengthrule(length),
   maxlength: (length) => new Maxlengthrule(length),
-  equalsto: (fieldname) => new Equalstorule(field),
+  equalsto: (fieldname) => new Equalstorule(fieldname),
   custom: (fn) => new Customrule(fn)
 }
 
 module.exports.FieldFormat = Floatformat
 module.exports.FieldRule = FieldRule
 module.exports.Strategy = Strategy
+module.exports.MongooseStrategy = MongooseStrategy
+module.exports.SequelizeStrategy = SequelizeStrategy
