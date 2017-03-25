@@ -16,8 +16,14 @@ describe('Form module', function () {
     it('Must return a new instance', function () {
       let form = Form.create()
       expect(form.constructor.name).to.be.equal('Form')
-      expect(form).to.has.ownProperty('fields', 'errors')
-      expect(form).to.respondTo('process', 'extends')
+      expect(form).to.have.property('fields')
+      expect(form).to.have.property('errors')
+      expect(form).to.respondTo('process')
+      expect(form).to.respondTo('extends')
+      expect(form).to.respondTo('send')
+      expect(form).to.respondTo('send')
+      expect(form).to.respondTo('validate')
+      expect(form).to.respondTo('validateWithModel')
     })
 
     it('Must throw an error on bad args', function () {
@@ -42,7 +48,7 @@ describe('Form module', function () {
           rules: [Form.rule.required()]
         }
       ])
-      expect(form.fields).to.be.instanceof(Array)
+      expect(form.fields).to.be.an.instanceof(Array)
       expect(form.fields).to.has.length(2)
       expect(form.fields[0].constructor.name).to.be.equal('Field')
       expect(form.fields[0]).to.has.ownProperty('definition', 'value', 'errors', 'checked')
@@ -179,15 +185,35 @@ describe('Form module', function () {
         expect(nextStub.args[0][0].message).to.be.equal('No field found in the request body for the field name: test')
       }))
 
-      it('should call Form:validate and next, and fill req.form', sinon.test(function (done) {
+      it('should call Form:send', sinon.test(function (done) {
         let form = Form.create([{ name: 'test', label: 'test', format: Form.format.string() }])
-        let nextStub = this.stub()
+        let next = this.spy()
+        let sendStub = this.spy(form, 'send')
+        let req = { method: 'post', body: { test: 'test' } }
+        let res = {}
+
+        form
+        .process(req, res, next)
+        .then(function () {
+          expect(sendStub.calledOnce).to.be.true
+          done()
+        })
+        .catch(e => done(e))
+
+      }))
+    })
+
+    describe('Send the form informations to the next middleware', function () {
+
+      it('Should call Form::validate then next', sinon.test(function (done) {
+        let form = Form.create([{ name: 'test', label: 'test', format: Form.format.string() }])
+        let nextStub = this.spy()
         let validateStub = this.spy(form, 'validate')
         let req = { method: 'post', body: { test: 'test' } }
         let res = {}
 
         form
-        .process(req, res, nextStub)
+        .send(req, res, nextStub)
         .then(function () {
           expect(validateStub.calledBefore(nextStub)).to.be.true
           expect(nextStub.calledOnce).to.be.true
@@ -195,7 +221,6 @@ describe('Form module', function () {
           done()
         })
         .catch(e => done(e))
-
       }))
     })
   })
