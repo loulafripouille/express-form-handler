@@ -12,31 +12,31 @@ const sequelizeStrategy = require('./../lib/model/strategies/sequelize')
 
 describe('Config module', function () {
 
-  describe('handles locales', function () {
+  // describe('handles locales', function () {
 
-    it('should be "en" by default', function () {
+  //   it('should be "en" by default', function () {
 
-      expect(config.getLocale()).to.be.equal('en')
-    })
+  //     expect(config.getLocale()).to.be.equal('en')
+  //   })
 
-    it('should change the locale value', function () {
+  //   it('should change the locale value', function () {
 
-      config.setLocale('fr')
-      expect(config.getLocale()).to.be.equal('fr')
+  //     config.setLocale('fr')
+  //     expect(config.getLocale()).to.be.equal('fr')
 
-      config.setLocale('en')
-      expect(config.getLocale()).to.be.equal('en')
-    })
+  //     config.setLocale('en')
+  //     expect(config.getLocale()).to.be.equal('en')
+  //   })
 
-    it('should set the locale to "en" on unknown given locale', function () {
+  //   it('should set the locale to "en" on unknown given locale', function () {
 
-      config.setLocale('de')
-      expect(config.getLocale()).to.be.equal('en')
+  //     config.setLocale('de')
+  //     expect(config.getLocale()).to.be.equal('en')
 
-      config.setLocale('it')
-      expect(config.getLocale()).to.be.equal('en')
-    })
-  })
+  //     config.setLocale('it')
+  //     expect(config.getLocale()).to.be.equal('en')
+  //   })
+  // })
 
   describe('handles model strategies', function () {
 
