@@ -85,7 +85,7 @@ module.exports = formHandler.create([
 - **maxlength**
 
 ## Use the route middleware
-Forms must be submitted by POST method. In your routes file, you can call a route with "app.post" or "app.all" like this :
+Forms must be submitted by POST, PUT or PATCH method. In your routes file, you can call a route with "app.post" or "app.all" like this :
 ```js
 //./routes/user.js
 
