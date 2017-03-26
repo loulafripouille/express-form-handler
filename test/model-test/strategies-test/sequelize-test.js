@@ -33,6 +33,7 @@ describe('sequelize model strategy', function () {
       let bindStub = sinon.stub(sequelizeStrategy, 'bind')
 
       findOneStube.returns(new Promise((resolve, reject) => resolve()))
+      sequelizeStrategy.modelInstance = {}
 
       sequelizeStrategy
       .update({ params: { id: 1 } })

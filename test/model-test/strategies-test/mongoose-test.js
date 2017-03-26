@@ -33,6 +33,7 @@ describe('mongoose model strategy', function () {
       let bindStub = sinon.stub(mongooseStrategy, 'bind')
 
       findOneStube.returns(new Promise((resolve, reject) => resolve()))
+      mongooseStrategy.modelInstance = {}
 
       mongooseStrategy
       .update({ params: { id: 1 } })
