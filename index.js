@@ -51,7 +51,7 @@ module.exports.rule = {
   custom: (fn) => new Customrule(fn)
 }
 
-module.exports.FieldFormat = Floatformat
+module.exports.FieldFormat = FieldFormat
 module.exports.FieldRule = FieldRule
 module.exports.Strategy = Strategy
 module.exports.MongooseStrategy = MongooseStrategy

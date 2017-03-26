@@ -11,7 +11,6 @@ const Fieldformat = require('./../../../lib/field/fieldformat')
 const Dateformat = require('./../../../lib/field/formats/date')
 
 describe('Dateformat object', function () {
-
   it('should herits Fieldformat', function () {
     let date = new Dateformat()
 
@@ -25,7 +24,6 @@ describe('Dateformat object', function () {
   })
 
   describe('Dateformat check', function () {
-
     it('should return true if the given string correspond to a date', function () {
       let date = new Dateformat()
 

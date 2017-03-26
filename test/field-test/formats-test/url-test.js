@@ -11,7 +11,6 @@ const Fieldformat = require('./../../../lib/field/fieldformat')
 const Urlformat = require('./../../../lib/field/formats/url')
 
 describe('Urlformat object', function () {
-
   it('should herits Fieldformat', function () {
     let url = new Urlformat()
 
@@ -25,7 +24,6 @@ describe('Urlformat object', function () {
   })
 
   describe('Urlformat check', function () {
-
     it('should return true if the given url correspond to a url', function () {
       let url = new Urlformat()
 

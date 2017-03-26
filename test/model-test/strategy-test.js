@@ -10,7 +10,6 @@ const sinon = require('sinon')
 const Strategy = require('./../../lib/model/strategy')
 
 describe('strategy object', function () {
-
   it('new instance should have null name', function () {
     let strategy = new Strategy()
 

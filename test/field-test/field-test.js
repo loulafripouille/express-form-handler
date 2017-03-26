@@ -12,9 +12,7 @@ const Field = rewire('./../../lib/field/field')
 const Form = require('./../..')
 
 describe('Field module', function () {
-
   describe('create a new field instance', function () {
-
     it('must throw an error on bad format', function () {
       let newfield = function () {
         let field = new Field({ name: 'test', label: 'test', format: 'email' })
@@ -48,7 +46,6 @@ describe('Field module', function () {
   })
 
   describe('check a field', function () {
-
     it('must call the field format check method', sinon.test(function () {
       let field = new Field({ name: 'test', label: 'test', format: Form.format.email() })
       let formatCheckStub = this.stub(field.definition.format, 'check')
@@ -76,9 +73,9 @@ describe('Field module', function () {
 
     it('must call the field rule check method', sinon.test(function () {
       let field = new Field(
-        { 
-          name: 'test', 
-          label: 'test', 
+        {
+          name: 'test',
+          label: 'test',
           format: Form.format.email(),
           rules: Form.rule.required()
         }
@@ -88,7 +85,7 @@ describe('Field module', function () {
 
       formatCheckStub.returns(true)
       ruleCheckStub.returns(true)
-      
+
       field.value = 'test@test.com'
       field.check([])
 
@@ -100,9 +97,9 @@ describe('Field module', function () {
 
     it('must call generateErrors function on a field format error', sinon.test(function () {
       let field = new Field(
-        { 
-          name: 'test', 
-          label: 'test', 
+        {
+          name: 'test',
+          label: 'test',
           format: Form.format.email(),
           rules: Form.rule.required()
         }
@@ -114,7 +111,7 @@ describe('Field module', function () {
 
       formatCheckStub.returns(false)
       ruleCheckStub.returns(true)
-      
+
       field.value = 'test@test.com'
       field.check([])
 
@@ -125,9 +122,9 @@ describe('Field module', function () {
 
     it('must call generateErrors function on a field rule error', sinon.test(function () {
       let field = new Field(
-        { 
-          name: 'test', 
-          label: 'test', 
+        {
+          name: 'test',
+          label: 'test',
           format: Form.format.email(),
           rules: Form.rule.required()
         }
@@ -139,7 +136,7 @@ describe('Field module', function () {
 
       formatCheckStub.returns(true)
       ruleCheckStub.returns(false)
-      
+
       field.value = 'test@test.com'
       field.check([])
 

@@ -11,7 +11,6 @@ const Fieldformat = require('./../../../lib/field/fieldformat')
 const Stringformat = require('./../../../lib/field/formats/string')
 
 describe('Stringformat object', function () {
-
   it('should herits Fieldformat', function () {
     let string = new Stringformat()
 
@@ -25,7 +24,6 @@ describe('Stringformat object', function () {
   })
 
   describe('Stringformat check', function () {
-
     it('should return true if the given string correspond to a string', function () {
       let string = new Stringformat()
 

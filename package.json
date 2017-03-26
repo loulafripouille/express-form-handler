@@ -4,7 +4,7 @@
   "description": "Form handler for express",
   "main": "index.js",
   "scripts": {
-    "test": "node_modules/mocha/bin/mocha --recursive"
+    "test": "standard && node_modules/mocha/bin/mocha --recursive"
   },
   "repository": {
     "type": "git",
@@ -32,6 +32,12 @@
     "chai": "^3.5.0",
     "mocha": "^3.2.0",
     "rewire": "^2.5.2",
-    "sinon": "^1.17.7"
+    "sinon": "^1.17.7",
+    "standard": "^9.0.2"
+  },
+  "standard": {
+    "ignore": [
+      "test"
+    ]
   }
 }

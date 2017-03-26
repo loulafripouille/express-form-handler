@@ -11,7 +11,6 @@ const Fieldformat = require('./../../../lib/field/fieldformat')
 const Floatformat = require('./../../../lib/field/formats/float')
 
 describe('Floatformat object', function () {
-
   it('should herits Fieldformat', function () {
     let float = new Floatformat()
 
@@ -25,7 +24,6 @@ describe('Floatformat object', function () {
   })
 
   describe('Floatformat check', function () {
-
     it('should return true if the given string correspond to a float', function () {
       let float = new Floatformat()
 

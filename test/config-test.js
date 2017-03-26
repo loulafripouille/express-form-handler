@@ -11,7 +11,6 @@ const config = require('./../lib/config')
 const sequelizeStrategy = require('./../lib/model/strategies/sequelize')
 
 describe('Config module', function () {
-
   // describe('handles locales', function () {
 
   //   it('should be "en" by default', function () {
@@ -39,9 +38,7 @@ describe('Config module', function () {
   // })
 
   describe('handles model strategies', function () {
-
     it('should be null by default', function () {
-
       expect(config.getModelStrategy()).to.be.equal(null)
     })
 
@@ -56,7 +53,6 @@ describe('Config module', function () {
   })
 
   describe('validation by the model strategy', function () {
-
     it('should throw an error on non boolean arg given', function () {
       let fn = function () {
         config.validationByModel('true')
@@ -69,7 +65,7 @@ describe('Config module', function () {
       expect(config.isValidationByModel()).to.be.equal(true)
     })
 
-    after(function() {
+    after(function () {
       config.validationByModel(false)
     })
   })

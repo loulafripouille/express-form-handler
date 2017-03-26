@@ -11,7 +11,6 @@ const Fieldformat = require('./../../../lib/field/fieldformat')
 const Alphaformat = require('./../../../lib/field/formats/alpha')
 
 describe('Alphaformat object', function () {
-
   it('should herits Fieldformat', function () {
     let alphaformat = new Alphaformat()
 
@@ -25,7 +24,6 @@ describe('Alphaformat object', function () {
   })
 
   describe('Alphaformat check', function () {
-
     it('should return true with a string containing only alpha carachters', function () {
       let alphaformat = new Alphaformat()
 

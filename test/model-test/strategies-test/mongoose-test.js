@@ -11,14 +11,13 @@ const MongooseStrategy = require('./../../../lib/model/strategies/mongoose')
 const Strategy = require('./../../../lib/model/strategy')
 
 describe('mongoose model strategy', function () {
-
-  it('should herits Strategy', function() {
+  it('should herits Strategy', function () {
     let mongooseStrategy = new MongooseStrategy()
 
     expect(mongooseStrategy).to.be.an.instanceOf(Strategy)
   })
 
-  it('should implement update, bind, findOne and validate method', function() {
+  it('should implement update, bind, findOne and validate method', function () {
     let mongooseStrategy = new MongooseStrategy()
 
     expect(mongooseStrategy).to.have.property('bind')
@@ -28,17 +27,16 @@ describe('mongoose model strategy', function () {
   })
 
   describe('Update the model', function () {
-
     it('Should call Strategy:findOne, Strategy:bind and returns a promise', sinon.test(function (done) {
       let mongooseStrategy = new MongooseStrategy({})
       let findOneStube = sinon.stub(mongooseStrategy, 'findOne')
       let bindStub = sinon.stub(mongooseStrategy, 'bind')
 
-      findOneStube.returns(new Promise((resolve,reject) => resolve()))
+      findOneStube.returns(new Promise((resolve, reject) => resolve()))
 
       mongooseStrategy
       .update({ params: { id: 1 } })
-      .then(function(model) {
+      .then(function (model) {
         expect(findOneStube.calledBefore(bindStub)).to.be.true
         expect(bindStub.calledOnce).to.be.true
 
@@ -48,12 +46,12 @@ describe('mongoose model strategy', function () {
     }))
 
     it('Should create a new model instance then call Strategy:bind and returns a promise', sinon.test(function (done) {
-      let mongooseStrategy = new MongooseStrategy(function Test(){})
+      let mongooseStrategy = new MongooseStrategy(function Test () {})
       let bindStub = sinon.stub(mongooseStrategy, 'bind')
 
       mongooseStrategy
       .update({ params: { } })
-      .then(function(model) {
+      .then(function (model) {
         expect(bindStub.calledOnce).to.be.true
 
         done()

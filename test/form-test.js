@@ -10,9 +10,7 @@ const sinon = require('sinon')
 const Form = require('./..')
 
 describe('Form module', function () {
-  
   describe('Create a new form', function () {
-    
     it('Must return a new instance', function () {
       let form = Form.create()
       expect(form.constructor.name).to.be.equal('Form')
@@ -56,7 +54,6 @@ describe('Form module', function () {
     })
 
     describe('Extend a form', function () {
-
       it('Should add given form fields into extended form fields array', function () {
         let rootForm = Form.create([
           {
@@ -132,7 +129,7 @@ describe('Form module', function () {
 
       it('should call ModelStrategy:validate on each fields', sinon.test(function (done) {
         config.setModelStrategy(new MongooseStrategy({}))
-        
+
         let form = Form.create([{ name: 'test', label: 'test', format: Form.format.string() }])
         let modelStrategyValidateStub = this.stub(config.getModelStrategy(), 'validate')
         let isValidationByModelStub = this.stub(config, 'isValidationByModel')
@@ -156,7 +153,6 @@ describe('Form module', function () {
     })
 
     describe('Process a form', function () {
-
       it('should call next on bad method', sinon.test(function () {
         let form = Form.create()
         let nextStub = this.stub()
@@ -199,12 +195,10 @@ describe('Form module', function () {
           done()
         })
         .catch(e => done(e))
-
       }))
     })
 
     describe('Send the form informations to the next middleware', function () {
-
       it('Should call Form::validate then next', sinon.test(function (done) {
         let form = Form.create([{ name: 'test', label: 'test', format: Form.format.string() }])
         let nextStub = this.spy()

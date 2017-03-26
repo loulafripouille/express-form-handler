@@ -11,7 +11,6 @@ const Fieldformat = require('./../../../lib/field/fieldformat')
 const Numericformat = require('./../../../lib/field/formats/numeric')
 
 describe('Numericformat object', function () {
-
   it('should herits Fieldformat', function () {
     let numeric = new Numericformat()
 
@@ -25,7 +24,6 @@ describe('Numericformat object', function () {
   })
 
   describe('Numericformat check', function () {
-
     it('should return true if the given string correspond to a numeric', function () {
       let numeric = new Numericformat()
 

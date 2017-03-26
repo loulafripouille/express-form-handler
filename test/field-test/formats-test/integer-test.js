@@ -11,7 +11,6 @@ const Fieldformat = require('./../../../lib/field/fieldformat')
 const Intergerformat = require('./../../../lib/field/formats/integer')
 
 describe('Intergerformat object', function () {
-
   it('should herits Fieldformat', function () {
     let integer = new Intergerformat()
 
@@ -25,7 +24,6 @@ describe('Intergerformat object', function () {
   })
 
   describe('Intergerformat check', function () {
-
     it('should return true if the given string correspond to a integer', function () {
       let integer = new Intergerformat()
 

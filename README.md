@@ -11,6 +11,7 @@ This feature is developed with the strategy principle, feel free to use yours. T
 >This module doesn't provide a form markup generator! It's just a back-end form-handler (for the moment?).
 
 [![Build Status](https://travis-ci.org/laudeon/express-form-handler.svg?branch=master)](https://travis-ci.org/laudeon/express-form-handler) [![npm version](https://badge.fury.io/js/express-form-handler.svg)](https://badge.fury.io/js/express-form-handler)
+[![Standard - JavaScript Style Guide](https://img.shields.io/badge/code_style-standard-brightgreen.svg)](https://standardjs.com)
 
 - [Get Started](#get-started)
 	- [Install via npm](#install-via-npm)

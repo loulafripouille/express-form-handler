@@ -11,7 +11,6 @@ const Fieldformat = require('./../../../lib/field/fieldformat')
 const Emailformat = require('./../../../lib/field/formats/email')
 
 describe('Emailformat object', function () {
-
   it('should herits Fieldformat', function () {
     let email = new Emailformat()
 
@@ -25,7 +24,6 @@ describe('Emailformat object', function () {
   })
 
   describe('Emailformat check', function () {
-
     it('should return true if the given string correspond to a email', function () {
       let email = new Emailformat()
 
