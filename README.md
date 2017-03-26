@@ -24,7 +24,7 @@ This feature is developed with the strategy principle, feel free to use yours. T
 # Get Started
 
 ## Install via npm
-Run `npm install --save express-form-handler`
+Run `npm install --save express-form-handler@2.0.0-beta.1`
 
 ## Create a form file
 ```js
