@@ -1,25 +1,36 @@
 # express-form-handler
 
-A form handler for the Node.js framework Express.js
-
-This module allows you to define your form in separated file, **reuse** and **extend** it at any time.
-Then, it process the form through an Express route middleware.
-
-You can attach a model to your form. In this way, a new model instance will be updated with form data. If a params 'id' is present in the `req` object, the model instance will be retrieve from the DB.
-This feature is developed with the strategy principle, feel free to use yours. The module propose a mongoose and a sequelize strategy.
-
->This module doesn't provide a form markup generator! It's just a back-end form-handler (for the moment?).
+A form handler for the Node.js framework: Express.js
 
 [![Build Status](https://travis-ci.org/laudeon/express-form-handler.svg?branch=master)](https://travis-ci.org/laudeon/express-form-handler) [![npm version](https://badge.fury.io/js/express-form-handler.svg)](https://badge.fury.io/js/express-form-handler)
 [![Standard - JavaScript Style Guide](https://img.shields.io/badge/code_style-standard-brightgreen.svg)](https://standardjs.com)
 
+- [Why?](#why?)
 - [Get Started](#get-started)
-	- [Install via npm](#install-via-npm)
-	- [Create a form file](#create-a-form-file)
-	- [Use the route middleware](#use-the-route-middleware)
-	- [Extend a form](#extend-a-form)
+  - [Install](#install-via-npm)
+  - [Create a form](#create-a-form-file)
+  - [The middleware](#use-the-route-middleware)
+  - [Extend a form](#extend-a-form)
+- [Go further](#go-further)
+  - [Configuration](#configuration)
+  - [Model Strategy](#model-strategy)
+  - [Rules & Formats](#rules-and-formats)
 - [Contribute](#contribute)
 - [Changelog](#changelog)
+
+# Why?
+
+Define a form (fields, field format & validation rules, ...), process the form validation with a route middleware then use the `req.form` object into the next route middleware.
+
+Attach a model to a form in order to automate data binding to it.
+
+Chose the way you want to process the validation: by the defined form's fields format and rules or by the model validate method provide by mongoose, sequelize, etc.
+
+Extend your forms with other forms.
+
+Create and integrate your own model strategy for your favourite ODM / ORM.
+
+Create your own formats and rules.
 
 # Get Started
 
@@ -32,10 +43,8 @@ Run `npm install --save express-form-handler`
 
 const formHandler = require('express-form-handler');
 const User = require('./../models/user')
-
-formHandler.setModelStrategy(new formHandler.MongooseStrategy(User))
  
-module.exports = formHandler.create([
+form = formHandler.create([
   {
     name: 'username',
     label: 'Username',
@@ -64,6 +73,14 @@ module.exports = formHandler.create([
     ]
   }
 ])
+
+form.configure({
+  modelStrategy: new formHandler.MongooseStrategy(User),
+  validationByModel: false
+})
+
+module.exports = form
+
 ```
 ### formats supported (with node-validator help!)
 
@@ -85,7 +102,9 @@ module.exports = formHandler.create([
 - **maxlength**
 
 ## Use the route middleware
-Forms must be submitted by POST, PUT or PATCH method. In your routes file, you can call a route with "app.post" or "app.all" like this :
+
+*Forms must be submitted by POST, PUT or PATCH method.*
+
 ```js
 //./routes/user.js
 
