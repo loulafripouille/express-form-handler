@@ -35,7 +35,7 @@ Create your own formats and rules.
 # Get Started
 
 ## Install via npm
-Run `npm install --save express-form-handler@2.0.0-beta.1`
+Run `npm install --save express-form-handler@2.0.0-beta.4`
 
 ## Create a form file
 ```js
