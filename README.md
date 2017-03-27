@@ -74,7 +74,7 @@ form = formHandler.create([
   }
 ])
 
-form.configure({
+form.config({
   modelStrategy: new formHandler.MongooseStrategy(User),
   validationByModel: false
 })
