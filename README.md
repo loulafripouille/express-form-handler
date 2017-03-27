@@ -5,7 +5,7 @@ A form handler for the Node.js framework: Express.js
 [![Build Status](https://travis-ci.org/laudeon/express-form-handler.svg?branch=master)](https://travis-ci.org/laudeon/express-form-handler) [![npm version](https://badge.fury.io/js/express-form-handler.svg)](https://badge.fury.io/js/express-form-handler)
 [![Standard - JavaScript Style Guide](https://img.shields.io/badge/code_style-standard-brightgreen.svg)](https://standardjs.com)
 
-- [Why?](#why?)
+- [Why?](#why)
 - [Get Started](#get-started)
   - [Install](#install-via-npm)
   - [Create a form](#create-a-form-file)
