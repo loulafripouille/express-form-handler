@@ -22,7 +22,7 @@ A form handler for the Node.js framework: Express.js
 
 Define a form (fields, field format & validation rules, ...), process the form validation with a route middleware then use the `req.form` object into the next route middleware.
 
-Attach a model to a form in order to automate data binding to it. When a `:id` parameter is present in the `req` object, form-handler will try to find the corresponding document into the database before binding data.
+Attach a model to a form in order to automate data binding to it. When a `:id` parameter is present in the `req` object, form-handler will try to find the corresponding document into the database before updating it.
 
 Chose the way you want to process the validation: by the defined form's fields format and rules or by the model validate method provide by mongoose, sequelize, etc.
 
@@ -35,16 +35,14 @@ Create your own formats and rules.
 # Get Started
 
 ## Install via npm
-Run `npm install --save express-form-handler@2.0.0-beta.4`
+Run `npm install --save express-form-handler@2.0.0-beta.5`
 
 ## Create a form file
 ```js
-//./form/user.js
-
 const formHandler = require('express-form-handler');
-const User = require('./../models/user')
+const User = require('./models/user')
  
-form = formHandler.create([
+let form = formHandler.create([
   {
     name: 'username',
     label: 'Username',
@@ -106,9 +104,7 @@ module.exports = form
 *Forms must be submitted by POST, PUT or PATCH method.*
 
 ```js
-//./routes/user.js
-
-const userForm = require('./../form/user');
+const userForm = require('./user-form');
 
 //...
 
@@ -127,15 +123,26 @@ app.post('/registration', userForm.process, function(req, res, next) {
 ## Extend a form
 
 ```js
-//./form/userAddress.js
-
 const formHandler = require('express-form-handler');
-const userForm = require('./user');
+const userForm = require('./user-form');
 
 module.exports = formHandler.create([
     //...
 ]).extends(userForm);
 ```
+
+# Go further
+
+## Configuration
+```js
+form.config({
+  modelStrategy: new formHandler.MongooseStrategy(User),
+  validationByModel: false // true if you want to use the validate() method from the model if it has one.
+})
+```
+## Model Strategy
+
+## Rules & Formats
 
 # Contribute
 
@@ -144,12 +151,18 @@ Feel free to open an issue if you found a bug or if you have an idea that can im
 
 # Changelog
 
+
 ## v2.0.0-beta
 - Remove external stateless configuration to let form object handle it. It makes more sens to have a stateful configuration, and its easier to understand.
 - fix bugs
 
-## v2.0.0-alpha
-- Rewrite the module in order to have a more flexible way to personalized its behavior with model strategies and formats / rules strategies. That means, if something is missing for you, you can create a new strategy to create a new format, or a new rule or even a new model handler. juste herit your object with the corresponding strategy object which are exposed at the entry point of the module.
+## v2.0.0-alpha.x
+
+Rewrite the module in order to have a more flexible way to personalized its behaviors with:
+  - model strategies
+  - formats/rules strategies. 
+
+That means, if something is missing for you in this package, you can create a new model strategy or create a new field format or rule. juste inherit your object with the corresponding strategy object which are exposed at the entry point of the module.
 
 ## v1.2.x
 
