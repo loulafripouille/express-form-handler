@@ -22,7 +22,7 @@ A form handler for the Node.js framework: Express.js
 
 Define a form (fields, field format & validation rules, ...), process the form validation with a route middleware then use the `req.form` object into the next route middleware.
 
-Attach a model to a form in order to automate data binding to it.
+Attach a model to a form in order to automate data binding to it. When a `:id` parameter is present in the `req` object, form-handler will try to find the corresponding document into the database before binding data.
 
 Chose the way you want to process the validation: by the defined form's fields format and rules or by the model validate method provide by mongoose, sequelize, etc.
 
@@ -120,6 +120,7 @@ app.post('/registration', userForm.process, function(req, res, next) {
     //else...
     console.log(req.form.username);
     console.log(req.form.password);
+    console.log(req.form.model);
 });
 ```
 
@@ -143,7 +144,11 @@ Feel free to open an issue if you found a bug or if you have an idea that can im
 
 # Changelog
 
-## v2.0.0-alpha.x
+## v2.0.0-beta
+- Remove external stateless configuration to let form object handle it. It makes more sens to have a stateful configuration, and its easier to understand.
+- fix bugs
+
+## v2.0.0-alpha
 - Rewrite the module in order to have a more flexible way to personalized its behavior with model strategies and formats / rules strategies. That means, if something is missing for you, you can create a new strategy to create a new format, or a new rule or even a new model handler. juste herit your object with the corresponding strategy object which are exposed at the entry point of the module.
 
 ## v1.2.x
