@@ -256,8 +256,9 @@ Feel free to open an issue if you found a bug or if you have an idea that can im
 
 
 ## v2.0.0-beta
+- TODO: make model strategy and each strategies as external npm packages
 - Remove external stateless configuration to let form object handle it. It makes more sens to have a stateful configuration, and its easier to understand.
-- fix bugs
+- fix bugs from alpha
 
 ## v2.0.0-alpha.x
 
