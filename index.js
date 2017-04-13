@@ -27,9 +27,9 @@ const Maxlengthrule = require('./lib/field/rules/maxlength')
 const Equalstorule = require('./lib/field/rules/equalsto')
 const Customrule = require('./lib/field/rules/custom')
 
-module.exports = require('./lib/form')
+exports.create = require('./lib/form')
 
-module.exports.format = {
+exports.format = {
   string: () => new Stringformat(),
   text: () => new Stringformat(),
   textarea: () => new Stringformat(),
@@ -43,7 +43,7 @@ module.exports.format = {
   url: () => new URLformat()
 }
 
-module.exports.rule = {
+exports.rule = {
   required: () => new Requiredrule(),
   minlength: (length) => new Minlengthrule(length),
   maxlength: (length) => new Maxlengthrule(length),
@@ -51,8 +51,8 @@ module.exports.rule = {
   custom: (fn) => new Customrule(fn)
 }
 
-module.exports.FieldFormat = FieldFormat
-module.exports.FieldRule = FieldRule
-module.exports.Strategy = Strategy
-module.exports.MongooseStrategy = MongooseStrategy
-module.exports.SequelizeStrategy = SequelizeStrategy
+exports.FieldFormat = FieldFormat
+exports.FieldRule = FieldRule
+exports.Strategy = Strategy
+exports.MongooseStrategy = MongooseStrategy
+exports.SequelizeStrategy = SequelizeStrategy

@@ -20,24 +20,28 @@ A form handler for the Node.js framework: Express.js
 
 # Why?
 
-Define a form (fields, field format & validation rules, ...), process the form validation with a route middleware then use the `req.form` object into the next route middleware.
+**Make the form hanlding easier by avoiding repetitive tasks such as fields validation or find the one element to update according to the id route parameter.**
 
-Attach a model to a form in order to automate data binding to it. When a `:id` parameter is present in the `req` object, form-handler will try to find the corresponding document into the database before updating it.
+**Define a form** (fields, field format & validation rules, ...), process the form validation with a route middleware then use the `req.form` object into the next route middleware to check the form validity or get form values.
 
-Chose the way you want to process the validation: by the defined form's fields format and rules or by the model validate method provide by mongoose, sequelize, etc.
+**Extend a form** with other forms.
 
-Extend your forms with other forms.
+**Create your own formats and rules.**
 
-Create and integrate your own model strategy for your favourite ODM / ORM.
+**Attach a model** to a form through a **model strategy** in order to automate data binding to it. When a `:id` parameter is present in the `req.params` object, form-handler will try to find the corresponding document into the database before update it.
 
-Create your own formats and rules.
+Create a custom model strategy corresponding to your ODM / ORM.
+
+Chose the way you want to process the validation: by the defined form's fields format and rules or by the model strategy `validate()` method.
 
 # Get Started
 
 ## Install via npm
+
 Run `npm install --save express-form-handler@2.0.0-beta.5`
 
 ## Create a form file
+
 ```js
 const formHandler = require('express-form-handler');
 const User = require('./models/user')
@@ -77,9 +81,10 @@ form.config({
   validationByModel: false
 })
 
-module.exports = form
+module.exports = exports = form
 
 ```
+
 ### formats supported (with node-validator help!)
 
 - **alpha** - check if the string contains only letters (a-zA-Z).
@@ -134,6 +139,7 @@ module.exports = formHandler.create([
 # Go further
 
 ## Configuration
+
 ```js
 form.config({
   modelStrategy: new formHandler.MongooseStrategy(User),
@@ -142,7 +148,104 @@ form.config({
 ```
 ## Model Strategy
 
+You can create your own model strategy by creating an object which extends the main strategy provided by this module: `formHandler.Strategy`.
+
 ## Rules & Formats
+
+You can create your own field rule or field format by creating an object which extends the main rule or format object provided by this module: `formHandler.FieldRule` - `formHandler.FieldFormat`.
+
+### Create a new field rule
+
+```js
+const Fieldrule = require('express-form-handler').FieldRule
+
+class YourRule extends Fieldrule {
+  constructor (something) {
+    this.name = 'myRule' // Optional...
+    this.something = something
+  }
+
+  check (field) {
+    if (field.value !== this.something) {
+      this.error = `The field ${field.label} ...`
+      return false
+    }
+
+    return true
+  }
+}
+module.exports = exports = YourRule
+```
+
+### Use your own field rule
+
+```js
+const formHandler = require('express-form-handler');
+const YourRule = require('./yourule')
+
+let form = formHandler.create([
+  {
+    name: 'username',
+    label: 'Username',
+    format: formHandler.format.string(),
+    rules: [
+      formHandler.rule.required(), 
+      formHandler.rule.minlength(4),
+      new YourRule(something)
+    ]
+  }, 
+  // ...
+])
+
+// ...
+
+```
+
+### Create a new field format
+
+```js
+const validator = require('validator')
+const Fieldformat = require('express-form-handler').FieldFormat
+
+class YourFormat extends FieldFormat {
+  constructor () {
+    this.name = 'myFormat' // Optional...
+  }
+
+  check (field) {
+    if (!validator.isBase64(field.value)) {
+      this.error = `The field ${field.label} ...`
+      return false
+    }
+
+    return true
+  }
+}
+module.exports = exports = YourFormat
+```
+
+### Use your own field format
+
+```js
+const formHandler = require('express-form-handler');
+const YourFormat = require('./yourformat')
+
+let form = formHandler.create([
+  {
+    name: 'username',
+    label: 'Username',
+    format: new YourFormat(),
+    rules: [
+      formHandler.rule.required(), 
+      formHandler.rule.minlength(4)
+    ]
+  }, 
+  // ...
+])
+
+// ...
+
+```
 
 # Contribute
 
@@ -162,7 +265,7 @@ Rewrite the module in order to have a more flexible way to personalized its beha
   - model strategies
   - formats/rules strategies. 
 
-That means, if something is missing for you in this package, you can create a new model strategy or create a new field format or rule. juste inherit your object with the corresponding strategy object which are exposed at the entry point of the module.
+That means, if something is missing for you in this package, you can create a new model strategy or create a new field format or rule. juste inherit your object with the corresponding strategy object which are exposed at the entry point of the module. 
 
 ## v1.2.x
 
