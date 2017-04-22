@@ -7,9 +7,7 @@
 const FieldFormat = require('./lib/field/fieldformat')
 const FieldRule = require('./lib/field/fieldrule')
 
-const Strategy = require('./lib/model/strategy')
-const MongooseStrategy = require('./lib/model/strategies/mongoose')
-const SequelizeStrategy = require('./lib/model/strategies/sequelize')
+const Strategy = require('express-form-handler-strategy')
 
 const Stringformat = require('./lib/field/formats/string')
 const Dateformat = require('./lib/field/formats/date')
@@ -54,5 +52,3 @@ exports.rule = {
 exports.FieldFormat = FieldFormat
 exports.FieldRule = FieldRule
 exports.Strategy = Strategy
-exports.MongooseStrategy = MongooseStrategy
-exports.SequelizeStrategy = SequelizeStrategy

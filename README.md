@@ -43,7 +43,8 @@ Run `npm install --save express-form-handler@2.0.0-beta.5`
 ## Create a form file
 
 ```js
-const formHandler = require('express-form-handler');
+const formHandler = require('express-form-handler')
+const MongooseStrategy = require('express-form-handler-mongoose')
 const User = require('./models/user')
  
 let form = formHandler.create([
@@ -77,7 +78,7 @@ let form = formHandler.create([
 ])
 
 form.config({
-  modelStrategy: new formHandler.MongooseStrategy(User),
+  modelStrategy: new MongooseStrategy(User),
   validationByModel: false
 })
 
@@ -142,13 +143,13 @@ module.exports = formHandler.create([
 
 ```js
 form.config({
-  modelStrategy: new formHandler.MongooseStrategy(User),
+  modelStrategy: new MongooseStrategy(User), // Or whatever strategy
   validationByModel: false // true if you want to use the validate() method from the model if it has one.
 })
 ```
 ## Model Strategy
 
-You can create your own model strategy by creating an object which extends the main strategy provided by this module: `formHandler.Strategy`.
+You can create your own model strategy by creating an object which extends the main strategy provided by this module: `express-form-handler-strategy`.
 
 ## Rules & Formats
 
@@ -256,7 +257,7 @@ Feel free to open an issue if you found a bug or if you have an idea that can im
 
 
 ## v2.0.0-beta
-- TODO: make model strategy and each strategies as external npm packages
+- Make model strategy and each strategies an external npm package
 - Remove external stateless configuration to let form object handle it. It makes more sens to have a stateful configuration, and its easier to understand.
 - fix bugs from alpha
 

@@ -7,9 +7,12 @@
 const chai = require('chai')
 const expect = chai.expect
 const sinon = require('sinon')
+const sinonTest = require('sinon-test')
 const rewire = require('rewire')
 const Field = rewire('./../../lib/field/field')
 const Form = require('./../..')
+
+sinon.test = sinonTest.configureTest(sinon)
 
 describe('Field module', function () {
   describe('create a new field instance', function () {

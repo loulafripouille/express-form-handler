@@ -7,7 +7,10 @@
 const chai = require('chai')
 const expect = chai.expect
 const sinon = require('sinon')
+const sinonTest = require('sinon-test')
 const Form = require('./..')
+
+sinon.test = sinonTest.configureTest(sinon)
 
 describe('Form module', function () {
   describe('Create a new form', function () {
@@ -148,12 +151,11 @@ describe('Form module', function () {
       let nextStub = this.stub()
       let req = { method: 'get' }
       let res = {}
-      let errorArg = new Error()
+      let errorArg = new Error('Expected post, put or patch method. get given')
 
       form.process(req, res, nextStub)
 
       expect(nextStub.calledOnce).to.be.true
-      expect(nextStub.calledWithExactly(errorArg)).to.be.true
       expect(nextStub.args[0][0].message).to.be.equal('Expected post, put or patch method. get given')
     }))
 
@@ -167,7 +169,6 @@ describe('Form module', function () {
       form.process(req, res, nextStub)
 
       expect(nextStub.calledOnce).to.be.true
-      expect(nextStub.calledWithExactly(errorArg)).to.be.true
       expect(nextStub.args[0][0].message).to.be.equal('No field found in the request body for the field name: test')
     }))
 
