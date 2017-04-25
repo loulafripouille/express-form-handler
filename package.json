@@ -1,7 +1,7 @@
 {
   "name": "express-form-handler",
   "version": "2.0.0-beta.7",
-  "description": "Form handler for express",
+  "description": "A form handler for express, the nodejs framework.",
   "main": "index.js",
   "scripts": {
     "test": "standard && node_modules/mocha/bin/mocha --recursive"
@@ -26,9 +26,9 @@
   "homepage": "https://github.com/laudeon/express-form-handler#readme",
   "dependencies": {
     "as-array": "^2.0.0",
-    "validator": "^6.3.0",
     "express-form-handler-strategy": "^0.1.0",
-    "express-form-handler-mongoose": "^0.1.0"
+    "options": "0.0.6",
+    "validator": "^6.3.0"
   },
   "devDependencies": {
     "chai": "^3.5.0",
