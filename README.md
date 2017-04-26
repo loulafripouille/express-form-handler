@@ -257,7 +257,10 @@ Feel free to open an issue if you found a bug or if you have an idea that can im
 
 
 ## v2.0.0-beta
-- TODO: handle array field (list, checkbox)
+- TODO: a ~100% test coverage
+- TODO: a better readme
+- IN PROGRESS: handle array field value (list, checkbox)
+- IN PROGRESS: provide a model sourcing config to avoid db query repetition in specific case (a user, after auth for exemple)
 - Make model strategy and each strategies an external npm package
 - Remove external stateless configuration to let form object handle it. It makes more sens to have a stateful configuration, and its easier to understand.
 - fix bugs from alpha

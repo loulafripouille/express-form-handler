@@ -1,6 +1,11 @@
 {
-  "name": "express-form-handler",
   "version": "2.0.0-beta.11",
+  "author": "laudeon",
+  "contributors": [
+    "Seb00ch"
+  ],
+  "license": "MIT",
+  "name": "express-form-handler",
   "description": "A form handler for express, the nodejs framework.",
   "main": "index.js",
   "scripts": {
@@ -18,8 +23,6 @@
     "form",
     "validator"
   ],
-  "author": "laudeon",
-  "license": "MIT",
   "bugs": {
     "url": "https://github.com/laudeon/express-form-handler/issues"
   },
@@ -27,7 +30,7 @@
   "dependencies": {
     "as-array": "^2.0.0",
     "express-form-handler-strategy": "^0.1.0",
-    "options": "0.0.6",
+    "options": "^0.0.6",
     "validator": "^6.3.0"
   },
   "devDependencies": {

@@ -107,6 +107,53 @@ describe('Form module', function () {
     })
   })
 
+  describe('Configure a form', function () {
+    it('Should has default values', function() {
+      let form = Form.create([])
+
+      expect(form.configs).to.deep.equal({
+        modelStrategy: null,
+        validationByModel: false,
+        modelSourcing: null
+      })
+    })
+
+    it('Should throw on bad config', function() {
+      let form = function() { 
+        Form.create([]).config({
+          modelStrategy: 'check',
+          validationByModel: false,
+          modelSourcing: null
+        })
+      }
+
+      let formbis = function() { 
+        Form.create([]).config({
+          modelStrategy: null,
+          validationByModel: 'check',
+          modelSourcing: null
+        })
+      }
+
+      expect(form).to.throw()
+      expect(formbis).to.throw()
+    })
+
+    it('Should set passed value', function() {
+      let form = Form.create([]).config({
+        modelStrategy: null,
+        validationByModel: true,
+        modelSourcing: 'test'
+      })
+
+      expect(form.configs).to.deep.equal({
+        modelStrategy: null,
+        validationByModel: true,
+        modelSourcing: 'test'
+      })
+    })
+  })
+
   // describe('Validate a form', function () {
   //   let MongooseStrategy = require('./../lib/model/strategies/mongoose')
 
