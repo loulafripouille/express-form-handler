@@ -19,7 +19,6 @@ const Alphaformat = require('./lib/field/formats/alpha')
 const Alphanumericformat = require('./lib/field/formats/alphanumeric')
 const URLformat = require('./lib/field/formats/url')
 
-const Requiredrule = require('./lib/field/rules/required')
 const Minlengthrule = require('./lib/field/rules/minlength')
 const Maxlengthrule = require('./lib/field/rules/maxlength')
 const Equalstorule = require('./lib/field/rules/equalsto')
@@ -42,7 +41,6 @@ exports.format = {
 }
 
 exports.rule = {
-  required: () => new Requiredrule(),
   minlength: (length) => new Minlengthrule(length),
   maxlength: (length) => new Maxlengthrule(length),
   equalsto: (fieldname) => new Equalstorule(fieldname),

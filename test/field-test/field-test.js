@@ -80,21 +80,17 @@ describe('Field module', function () {
           name: 'test',
           label: 'test',
           format: Form.format.email(),
-          rules: Form.rule.required()
+          required: true
         }
       )
       let formatCheckStub = this.stub(field.definition.format, 'check')
-      let ruleCheckStub = this.stub(field.definition.rules, 'check')
-
+      
       formatCheckStub.returns(true)
-      ruleCheckStub.returns(true)
 
       field.value = 'test@test.com'
       field.check([])
 
-      expect(formatCheckStub.calledBefore(ruleCheckStub)).to.be.true
       expect(formatCheckStub.calledWithExactly(field.definition, [])).to.be.true
-      expect(ruleCheckStub.calledOnce).to.be.true
       expect(formatCheckStub.calledWithExactly(field.definition, [])).to.be.true
     }))
 
@@ -104,16 +100,14 @@ describe('Field module', function () {
           name: 'test',
           label: 'test',
           format: Form.format.email(),
-          rules: Form.rule.required()
+          required: true
         }
       )
       let formatCheckStub = this.stub(field.definition.format, 'check')
-      let ruleCheckStub = this.stub(field.definition.rules, 'check')
       let generateErrorsSpy = this.spy()
       Field.__set__('generateErrors', generateErrorsSpy)
 
       formatCheckStub.returns(false)
-      ruleCheckStub.returns(true)
 
       field.value = 'test@test.com'
       field.check([])
@@ -129,24 +123,22 @@ describe('Field module', function () {
           name: 'test',
           label: 'test',
           format: Form.format.email(),
-          rules: Form.rule.required()
+          rules: Form.rule.minlength(20),
+          required: true
         }
       )
       let formatCheckStub = this.stub(field.definition.format, 'check')
-      let ruleCheckStub = this.stub(field.definition.rules, 'check')
+      let rulesCheckStub = this.stub(field.definition.rules, 'check')
       let generateErrorsSpy = this.spy()
       Field.__set__('generateErrors', generateErrorsSpy)
 
       formatCheckStub.returns(true)
-      ruleCheckStub.returns(false)
+      rulesCheckStub.returns(false)
 
       field.value = 'test@test.com'
       field.check([])
 
-      expect(formatCheckStub.calledBefore(ruleCheckStub)).to.be.true
       expect(formatCheckStub.calledWithExactly(field.definition, [])).to.be.true
-      expect(ruleCheckStub.calledBefore(generateErrorsSpy)).to.be.true
-      expect(ruleCheckStub.calledWithExactly(field.definition, [])).to.be.true
       expect(generateErrorsSpy.calledOnce).to.be.true
     }))
   })
