@@ -1,4 +1,4 @@
-# express-form-handler
+# express-form-handler [v2 - beta]
 
 A form handler for the Node.js framework: Express.js
 
@@ -38,7 +38,7 @@ Chose the way you want to process the validation: by the defined form's fields f
 
 ## Install via npm
 
-Run `npm install --save express-form-handler@2.0.0-beta.5`
+Run `npm install --save express-form-handler@2.0.0-beta.11`
 
 ## Create a form file
 
