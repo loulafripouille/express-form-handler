@@ -162,6 +162,7 @@ const Fieldrule = require('express-form-handler').FieldRule
 
 class YourRule extends Fieldrule {
   constructor (something) {
+    super()
     this.name = 'myRule' // Optional...
     this.something = something
   }
@@ -210,6 +211,7 @@ const Fieldformat = require('express-form-handler').FieldFormat
 
 class YourFormat extends FieldFormat {
   constructor () {
+    super()
     this.name = 'myFormat' // Optional...
   }
 
